@@ -7,7 +7,7 @@ function Main() {
       <MainLeft>
         <MainH1>
           다이소 리뷰 사이트,{" "}
-          <span style={{ color: "#da3731", fontWeight: "800" }}>DAITSO</span>
+          <span style={{ color: "#da3731", fontWeight: "800" }}>DAISSO</span>
         </MainH1>
         <MainP>리뷰 쓰고 다이소 꿀템을 공유해요</MainP>
         <MainBtn>다이소몰 가기</MainBtn>
@@ -51,7 +51,7 @@ const MainBtn = styled.button`
   color: white;
   font-weight: bolder;
   font-size: 0.9em;
-  box-shadow: 5px 5px 15px #a3a3a3;
+  box-shadow: 5px 5px 15px #969696;
 
   &:hover {
     background-color: white;

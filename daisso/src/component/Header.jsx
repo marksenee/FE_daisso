@@ -4,7 +4,9 @@ import styled from "styled-components";
 function Header() {
   return (
     <HeaderDiv>
-      <HeaderLogo>DAITSO</HeaderLogo>
+      <HeaderLogo>
+        <img src="../daisso.jpeg" width="75" height="75" />
+      </HeaderLogo>
       <HeaderRight>
         <div>로그인</div>
         <div>회원가입</div>
@@ -19,15 +21,15 @@ const HeaderDiv = styled.div`
   border-bottom: 1.5px solid #da3731;
 
   display: flex;
-  padding: 20px 40px 20px 40px;
-  justify-content: space-between; //TODO: 왜안되노
+  padding: 10px 40px 0px 40px;
+  justify-content: space-between;
 `;
 
 const HeaderLogo = styled.h1`
   color: #da3731;
   margin: 5px 5px 5px 5px;
   font-weight: 800;
-  letter-spacing: -1px;
+  /* letter-spacing: -1px; */
 `;
 
 const HeaderRight = styled.div`
