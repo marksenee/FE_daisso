@@ -26,7 +26,8 @@ const HeaderDiv = styled.div`
 const HeaderLogo = styled.h1`
   color: #da3731;
   margin: 5px 5px 5px 5px;
-  font-weight: 900;
+  font-weight: 800;
+  letter-spacing: -1px;
 `;
 
 const HeaderRight = styled.div`
