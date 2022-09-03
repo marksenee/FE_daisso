@@ -17,7 +17,7 @@ function Main() {
         <MainBtn>다이소몰 가기</MainBtn>
         <MainBtn>리뷰 작성하기</MainBtn>
       </MainLeft>
-      <img src="../mainimage.png" width="460" height="330" />
+      <img src="../mainimage.png" alt="main" width="460" height="330" />
     </MainDiv>
   );
 }

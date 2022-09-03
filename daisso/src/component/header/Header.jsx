@@ -5,7 +5,7 @@ function Header() {
   return (
     <HeaderDiv>
       <HeaderLogo>
-        <img src="../daisso.jpeg" width="75" height="75" />
+        <img src="../daisso.jpeg" alt="logo" width="75" height="75" />
       </HeaderLogo>
       <HeaderRight>
         <div>로그인</div>
