@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import { FooterDiv, FooterLeft, FooterRight } from "./styles";
 
 function Footer() {
   return (
