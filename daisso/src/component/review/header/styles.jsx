@@ -4,7 +4,7 @@ const HeaderDiv = styled.div`
   border-bottom: 1.5px solid #da3731;
 
   display: flex;
-  padding: 10px 40px 0px 40px;
+  margin: 5px 10px 0px 10px;
   justify-content: space-between;
 `;
 
@@ -35,4 +35,29 @@ const HeaderButton = styled.button`
   }
 `;
 
-export { HeaderDiv, HeaderLogo, HeaderRight, HeaderButton };
+const HeaderContainer = styled.div`
+  display: flex;
+  float: left;
+`;
+
+const MenuButton = styled.button`
+  width: 50px;
+  height: 70px;
+  background-color: white;
+  border-style: solid;
+  border-color: white;
+  margin: 10px 10px 0px 0px;
+
+  &:hover {
+    background-color: #ddd;
+  }
+`;
+
+export {
+  HeaderDiv,
+  HeaderLogo,
+  HeaderRight,
+  HeaderButton,
+  HeaderContainer,
+  MenuButton,
+};
