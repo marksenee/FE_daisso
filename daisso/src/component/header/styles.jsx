@@ -23,6 +23,31 @@ const HeaderRight = styled.div`
   color: #464646;
 `;
 
+const HeaderUl = styled.ul`
+  list-style: none;
+  height: 50px;
+  line-height: 50px;
+  margin: 0 auto;
+  text-align: left;
+  align-items: center;
+
+  float: left;
+  position: relative;
+`;
+
+const HeaderLi = styled.div`
+  list-style: none;
+  line-height: 50px;
+  background-color: #fafafa;
+  padding: 5px 5px 5px 20px;
+  box-shadow: 3px 3px 7px #cccccc;
+
+  li:hover {
+    color: #da3731;
+    font-weight: bold;
+  }
+`;
+
 const HeaderButton = styled.button`
   background-color: white;
   border-style: solid;
@@ -35,4 +60,4 @@ const HeaderButton = styled.button`
   }
 `;
 
-export { HeaderDiv, HeaderLogo, HeaderRight, HeaderButton };
+export { HeaderDiv, HeaderLogo, HeaderRight, HeaderUl, HeaderLi, HeaderButton };

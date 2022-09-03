@@ -4,6 +4,7 @@ import { MainDiv, MainLeft, MainH1, MainP, MainBtn } from "./styles";
 
 function Main() {
   const navigate = useNavigate();
+  const daisomall = "https://www.daisomall.co.kr/online/online_main.php";
   return (
     <MainDiv>
       <MainLeft>
@@ -16,12 +17,18 @@ function Main() {
           </span>
         </MainH1>
         <MainP>리뷰 쓰고 다이소 꿀템을 공유해요</MainP>
-        <MainBtn>다이소몰 가기</MainBtn>
+        <MainBtn
+          onClick={() => {
+            window.open(daisomall);
+          }}
+        >
+          다이소몰 가기
+        </MainBtn>
         <MainBtn onClick={() => navigate(`/post/review`)}>
           리뷰 작성하기
         </MainBtn>
       </MainLeft>
-      <img src="../mainimage.png" width="460" height="330" />
+      <img src="../mainimage.png" alt="main" width="460" height="330" />
     </MainDiv>
   );
 }
