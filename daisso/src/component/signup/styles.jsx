@@ -10,8 +10,8 @@ const ModalBox = styled.div`
   border-radius: 10px;
   display: flex;
   left: 50%;
-  top: 30%;
-  transform: translate(-50%, -20%);
+  top: 100px;
+  transform: translate(-50%, 70px);
   margin: auto;
 
   flex-direction: column;
