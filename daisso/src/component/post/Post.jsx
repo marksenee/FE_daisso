@@ -6,7 +6,7 @@ function Post() {
   return (
     <PostDiv>
       <PostBox>
-        <PostModal />
+        {/* <PostModal /> */}
         <PostContent>
           <img
             src="https://image2.daisomall.co.kr/data/daiso_data/images/product/00/05/33/91/53/b_0005339153.gif"
