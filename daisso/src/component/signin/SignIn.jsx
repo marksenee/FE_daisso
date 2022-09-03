@@ -1,4 +1,6 @@
 import React from "react";
+import SingupModal from "../signup/SignUpModal";
+import useShowModal from "../../hooks/useShowModal";
 import {
   ContainerStyle,
   LoginContainer,
@@ -7,7 +9,9 @@ import {
   ButtonElement,
 } from "./styles";
 
-function Login() {
+function SignIn() {
+  const [isModal, ModalHandler] = useShowModal();
+
   return (
     <>
       <ContainerStyle>
@@ -17,7 +21,10 @@ function Login() {
           <LoginFormField placeholder="비밀번호" />
           <ButtonContainer>
             <ButtonElement>로그인</ButtonElement>
-            <ButtonElement>회원가입</ButtonElement>
+            <ButtonElement onClick={() => ModalHandler()}>
+              회원가입
+            </ButtonElement>
+            <SingupModal show={isModal} modalHandler={ModalHandler} />
           </ButtonContainer>
         </LoginContainer>
       </ContainerStyle>
@@ -25,4 +32,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignIn;
