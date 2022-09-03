@@ -3,18 +3,20 @@ import Dropdown from "./Dropdown";
 import { HeaderDiv, HeaderLogo, HeaderRight, HeaderUl } from "./styles";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const navigate = useNavigate();
   const [view, setView] = useState(false);
 
   return (
     <HeaderDiv>
-      <HeaderLogo>
+      <HeaderLogo onClick={() => navigate("/")}>
         <img src="../daisso.jpeg" alt="logo" width="75" height="75" />
       </HeaderLogo>
       <HeaderRight>
-        {/* <div>로그인</div>
-        <div>회원가입</div> */}
+        {/* TODO: 로그인 후 조건문 사용 */}
+        {/* <div onClick={() => navigate("/login")}>로그인</div> */}
         <HeaderUl
           onClick={() => {
             setView(!view);
