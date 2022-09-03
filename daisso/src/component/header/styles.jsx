@@ -23,4 +23,16 @@ const HeaderRight = styled.div`
   color: #464646;
 `;
 
-export { HeaderDiv, HeaderLogo, HeaderRight };
+const HeaderButton = styled.button`
+  background-color: white;
+  border-style: solid;
+  border-color: white;
+  font-size: 17px;
+  color: black;
+
+  &:hover {
+    color: #616161;
+  }
+`;
+
+export { HeaderDiv, HeaderLogo, HeaderRight, HeaderButton };
