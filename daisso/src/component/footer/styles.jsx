@@ -3,7 +3,7 @@ import styled from "styled-components";
 const FooterDiv = styled.div`
   height: 160px;
   margin-top: 100px;
-  padding: 23px 0px 0px 50px;
+  padding: 27px 0px 0px 50px;
   display: flex;
   justify-content: space-between;
 
