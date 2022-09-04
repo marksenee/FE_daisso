@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { MainDiv, MainLeft, MainH1, MainP, MainBtn } from "./styles";
 
 function Main() {
+  const navigate = useNavigate();
   const daisomall = "https://www.daisomall.co.kr/online/online_main.php";
   return (
     <MainDiv>
@@ -23,7 +24,9 @@ function Main() {
         >
           다이소몰 가기
         </MainBtn>
-        <MainBtn>리뷰 작성하기</MainBtn>
+        <MainBtn onClick={() => navigate(`/post/review`)}>
+          리뷰 작성하기
+        </MainBtn>
       </MainLeft>
       <img src="../mainimage.png" alt="main" width="460" height="330" />
     </MainDiv>

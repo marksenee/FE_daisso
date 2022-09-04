@@ -10,8 +10,8 @@ const ContainerStyle = styled.div`
 
   position: absolute;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  top: 100px;
+  transform: translate(-50%, 80px);
   margin: auto;
   flex-direction: column;
 
@@ -56,10 +56,17 @@ const ButtonElement = styled.button`
   }
 `;
 
+const LogoButton = styled.button`
+  background-color: transparent;
+  border-style: solid;
+  border-color: transparent;
+`;
+
 export {
   ContainerStyle,
   LoginContainer,
   LoginFormField,
   ButtonContainer,
   ButtonElement,
+  LogoButton,
 };

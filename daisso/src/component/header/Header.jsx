@@ -1,13 +1,22 @@
 import React, { useState } from "react";
 import Dropdown from "./Dropdown";
-import { HeaderDiv, HeaderLogo, HeaderRight, HeaderUl } from "./styles";
+import {
+  HeaderDiv,
+  HeaderLogo,
+  HeaderRight,
+  HeaderUl,
+  HeaderButton,
+} from "./styles";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { useNavigate } from "react-router-dom";
+import SingupModal from "../signup/SignUpModal";
+import useShowModal from "../../hooks/useShowModal";
 
 function Header() {
   const navigate = useNavigate();
   const [view, setView] = useState(false);
+  const [isModal, ModalHandler] = useShowModal();
 
   return (
     <HeaderDiv>
@@ -17,6 +26,9 @@ function Header() {
       <HeaderRight>
         {/* TODO: 로그인 후 조건문 사용 */}
         {/* <div onClick={() => navigate("/login")}>로그인</div> */}
+        <HeaderButton onClick={() => navigate(`/login`)}>로그인</HeaderButton>
+        <HeaderButton onClick={() => ModalHandler()}>회원가입</HeaderButton>
+        <SingupModal show={isModal} modalHandler={ModalHandler} />
         <HeaderUl
           onClick={() => {
             setView(!view);

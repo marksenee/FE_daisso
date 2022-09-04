@@ -48,4 +48,16 @@ const HeaderLi = styled.div`
   }
 `;
 
-export { HeaderDiv, HeaderLogo, HeaderRight, HeaderUl, HeaderLi };
+const HeaderButton = styled.button`
+  background-color: white;
+  border-style: solid;
+  border-color: white;
+  font-size: 18px;
+  color: black;
+
+  &:hover {
+    color: #616161;
+  }
+`;
+
+export { HeaderDiv, HeaderLogo, HeaderRight, HeaderUl, HeaderLi, HeaderButton };
