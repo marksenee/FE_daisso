@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
+import Layout from "../../layout/Layout";
 import ReviewHeader from "../header/Header";
 import {
+  Container,
   ParentContainer,
   ChildContainer,
   ElementBox,
@@ -15,6 +17,15 @@ import {
 } from "../addPost/styles";
 
 function EditReview() {
+  return (
+    <>
+      <Layout children={<EditReviewComponent />} />
+      {/* <ReviewHeader children={<EditReviewComponent />} /> */}
+    </>
+  );
+}
+
+function EditReviewComponent() {
   const array = [0, 1, 2, 3, 4];
   const [clicked, setClicked] = useState([false, false, false, false, false]);
 
@@ -25,10 +36,8 @@ function EditReview() {
     }
     setClicked(clickStates);
   };
-
   return (
-    <>
-      <ReviewHeader />
+    <Container>
       <ParentContainer>
         <ChildContainer>
           <ElementBox>
@@ -61,7 +70,7 @@ function EditReview() {
           </ElementBoxStyle>
         </ChildContainer>
       </ParentContainer>
-    </>
+    </Container>
   );
 }
 

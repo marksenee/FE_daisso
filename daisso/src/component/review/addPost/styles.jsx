@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+const Container = styled.div`
+  height: 800px;
+`;
+
 const ParentContainer = styled.div`
   width: 650px;
   height: 700px;
@@ -133,6 +137,7 @@ const ButtonStyle = styled.button`
 `;
 
 export {
+  Container,
   ParentContainer,
   ChildContainer,
   ElementBox,
