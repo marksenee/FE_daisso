@@ -21,7 +21,7 @@ const ModalBox = styled.div`
 
 const SignupForm = styled.div`
   width: 380px;
-  height: 230px;
+  height: 250px;
   background-color: white;
   display: inline-block;
   margin: 15px 0px 10px 70px;
@@ -55,7 +55,8 @@ const DoubleCheckButton = styled.button`
 const SignupButton = styled.button`
   width: 100px;
   height: 40px;
-  background-color: #616161;
+  /* background-color: #616161; */
+  background-color: ${(props) => (props.disabled ? "#616161" : "red")};
   color: white;
   border-style: solid;
   border-radius: 10px;
@@ -67,6 +68,9 @@ const SignupButton = styled.button`
     color: black;
   }
 `;
+function SignupButtonStyle({ disabled, ...rest }) {
+  return <SignupButton disabled={disabled} {...rest}></SignupButton>;
+}
 
 const CloseButton = styled.button`
   width: 50px;
@@ -107,6 +111,14 @@ const Background = styled.div`
   z-index: 0;
 `;
 
+const PasswordMessage = styled.span`
+  /* width: 250px; */
+  font-size: 11px;
+  color: red;
+  display: flex;
+  margin-left: 20px;
+`;
+
 export {
   ModalBackground,
   ModalBox,
@@ -116,4 +128,6 @@ export {
   SignupButton,
   CloseButton,
   Background,
+  PasswordMessage,
+  SignupButtonStyle,
 };
