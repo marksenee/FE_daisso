@@ -52,7 +52,7 @@ const HeaderButton = styled.button`
   background-color: white;
   border-style: solid;
   border-color: white;
-  font-size: 17px;
+  font-size: 18px;
   color: black;
 
   &:hover {
