@@ -56,10 +56,17 @@ const ButtonElement = styled.button`
   }
 `;
 
+const LogoButton = styled.button`
+  background-color: transparent;
+  border-style: solid;
+  border-color: transparent;
+`;
+
 export {
   ContainerStyle,
   LoginContainer,
   LoginFormField,
   ButtonContainer,
   ButtonElement,
+  LogoButton,
 };

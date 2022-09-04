@@ -7,6 +7,7 @@ import {
   LoginFormField,
   ButtonContainer,
   ButtonElement,
+  LogoButton,
 } from "./styles";
 import { useNavigate } from "react-router-dom";
 
@@ -16,8 +17,10 @@ function SignIn() {
 
   return (
     <>
-      <ContainerStyle onClick={() => navigate(`/`)}>
-        <img src="../daisso.jpeg" width="75" height="75" />
+      <ContainerStyle>
+        <LogoButton onClick={() => navigate(`/`)}>
+          <img src="../daisso.jpeg" width="75" height="75" />
+        </LogoButton>
         <LoginContainer>
           <LoginFormField placeholder="아이디" />
           <LoginFormField placeholder="비밀번호" />
