@@ -8,13 +8,15 @@ import {
   ButtonContainer,
   ButtonElement,
 } from "./styles";
+import { useNavigate } from "react-router-dom";
 
 function SignIn() {
+  const navigate = useNavigate();
   const [isModal, ModalHandler] = useShowModal();
 
   return (
     <>
-      <ContainerStyle>
+      <ContainerStyle onClick={() => navigate(`/`)}>
         <img src="../daisso.jpeg" width="75" height="75" />
         <LoginContainer>
           <LoginFormField placeholder="아이디" />
