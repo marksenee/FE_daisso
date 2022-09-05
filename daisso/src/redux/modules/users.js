@@ -19,7 +19,6 @@ export const __createUsers = createAsyncThunk(
   async (newUser, thunkAPI) => {
     try {
       const { data } = await axios.post("http://localhost:5001/users", newUser);
-      console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -33,11 +32,17 @@ export const users = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    /* Pending */
     [__createUsers.pending]: (state, action) => {
       state.isLoding = true; // 네트워크 요청 시작시, 로딩 상태를 true로 변경
     },
-    [__createUsers.fulfillWithValue]: (state, action) => {
+    [__createUsers.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.users = state.users.concat({
+        id: action.payload.id,
+        userId: action.payload.userId,
+      });
+    },
+    [__createUsers.rejected]: (state, action) => {
       state.isLoading = false;
     },
   },
