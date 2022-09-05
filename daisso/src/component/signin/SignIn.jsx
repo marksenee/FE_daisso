@@ -24,13 +24,13 @@ function SignIn() {
   const [password, setPassword, onChangePassword] = useInput();
 
   const { users } = useSelector((state) => state.users);
-  console.log("users", users);
 
   const onClickLogin = (userId, password) => {
     if (userId === "" || password === "") {
       alert("아이디와 비밀번호를 입력하세요");
     } else {
       dispatch(__getUser({ userId, password }));
+      navigate(`/`);
     }
   };
 

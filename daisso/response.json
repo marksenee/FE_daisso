@@ -1,0 +1,49 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "nickname": "Mark",
+      "content": "좋아요. 어떤 점이 좋냐면 구구절절 어쩌구저쩌구 두줄 넘어갈 경우 어떻게 보이는지 궁금해서 길게 쓰는 중입니다",
+      "productUrl": "https://www.daisomall.co.kr/shop/goods_view.php?id=0004470899&event_ix=14456",
+      "productImg": "https://image2.daisomall.co.kr/data/daiso_data/images/product/00/04/47/08/99/b_0004470899.gif",
+      "productName": "걸이형스텐집게(4P)",
+      "imgUrl": "URL",
+      "star": "⭐️⭐️⭐️⭐️⭐️",
+      "likes": 0
+    },
+    {
+      "id": 2,
+      "nickname": "Nick",
+      "content": "괜찮아요",
+      "productUrl": "https://www.daisomall.co.kr/shop/goods_view.php?id=0004278856&event_ix=14456",
+      "productImg": "https://image2.daisomall.co.kr/data/daiso_data/images/product/00/04/27/88/56/b_0004278856.gif",
+      "productName": "계량컵뚜껑잡곡용기1.2L",
+      "imgUrl": "URL",
+      "star": "⭐️⭐️⭐️⭐️",
+      "likes": 0
+    }
+  ],
+  "users": [
+    {
+      "userId": "test",
+      "nickName": "test",
+      "password": "test1234567!",
+      "passwordConfirm": "test1234567!",
+      "id": 3
+    },
+    {
+      "userId": "testt",
+      "nickName": "testt",
+      "password": "test123456!",
+      "passwordConfirm": "test123456!",
+      "id": 8
+    },
+    {
+      "userId": "hi",
+      "nickName": "hi",
+      "password": "hello123456!",
+      "passwordConfirm": "hello123456!",
+      "id": 11
+    }
+  ]
+}

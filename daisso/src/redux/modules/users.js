@@ -5,7 +5,7 @@ import generateToken from "../../utils/Token";
 import { setCookie, removeCookie } from "../../utils/Cookie";
 
 // url
-const REACT_APP_API_USERS_URL = `http://localhost:5001/users`;
+const REACT_APP_API_USERS_URL = `http://localhost:3001/users`;
 
 // initialState
 const initialState = {
@@ -24,7 +24,6 @@ export const __getUser = createAsyncThunk(
       await axios
         .get(REACT_APP_API_USERS_URL + `?userId=${userId}`)
         .then((res) => {
-          console.log("res", res.data[0]);
           if (res.data[0] == undefined) {
             alert("사용자가 존재하지 않습니다.");
           } else {
@@ -50,7 +49,7 @@ export const __createUsers = createAsyncThunk(
   "createUsers",
   async (newUser, thunkAPI) => {
     try {
-      const { data } = await axios.post("http://localhost:5001/users", newUser);
+      const { data } = await axios.post(REACT_APP_API_USERS_URL, newUser);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
