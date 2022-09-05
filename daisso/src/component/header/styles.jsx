@@ -60,4 +60,21 @@ const HeaderButton = styled.button`
   }
 `;
 
-export { HeaderDiv, HeaderLogo, HeaderRight, HeaderUl, HeaderLi, HeaderButton };
+const LogoutButton = styled.button`
+  font-size: 16px;
+  color: #424242;
+  border-style: solid;
+  border-color: transparent;
+  background-color: transparent;
+  margin-left: -8px;
+`;
+
+export {
+  HeaderDiv,
+  HeaderLogo,
+  HeaderRight,
+  HeaderUl,
+  HeaderLi,
+  HeaderButton,
+  LogoutButton,
+};

@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { HeaderLi } from "./styles";
+import { HeaderLi, LogoutButton } from "./styles";
 import { removeCookie } from "../../utils/Cookie";
 import useToken from "../../hooks/useToken";
+import { useDispatch } from "react-redux";
 
 function Dropdown() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const token = useToken();
 
@@ -16,7 +18,7 @@ function Dropdown() {
   return (
     <HeaderLi>
       <li onClick={() => navigate("/mypage")}>마이페이지</li>
-      <button onClick={() => onLogout()}>로그아웃</button>
+      <LogoutButton onClick={() => onLogout()}>로그아웃</LogoutButton>
     </HeaderLi>
   );
 }
