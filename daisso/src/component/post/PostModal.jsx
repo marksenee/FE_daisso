@@ -109,11 +109,11 @@ const ModalFooter = styled.div`
 `;
 
 const ModalBtn = styled.button`
-  width: 80px;
-  height: 30px;
+  width: 85px;
+  height: 32px;
   border-radius: 5px;
   border: none;
-  margin: 0px 12px 0px 0px;
+  margin: 0px 18px 0px 0px;
   background-color: #cccccc;
   color: white;
   font-weight: bolder;

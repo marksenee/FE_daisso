@@ -1,0 +1,57 @@
+{
+  "post": [
+    {
+      "id": 1,
+      "nickname": "nickname1",
+      "content": "좋아요",
+      "productUrl": "URL",
+      "productImg": "https://image2.daisomall.co.kr/data/daiso_data/images/product/00/05/33/91/53/b_0005339153.gif",
+      "productName": "집게",
+      "imgUrl": "URL",
+      "star": "⭐️⭐️⭐️⭐️⭐️",
+      "likes": 0
+    },
+    {
+      "id": 2,
+      "nickname": "nickname2",
+      "content": "괜찮아요",
+      "productUrl": "URL",
+      "productImg": "https://image2.daisomall.co.kr/data/daiso_data/images/product/00/04/49/81/35/b_0004498135.gif",
+      "productName": "뒤집개",
+      "imgUrl": "URL",
+      "star": "⭐️⭐️⭐️⭐️",
+      "likes": 0
+    },
+    {
+      "id": 3,
+      "nickname": "nickname3",
+      "content": "그럭저럭",
+      "productUrl": "URL",
+      "productImg": "https://image2.daisomall.co.kr/data/daiso_data/images/product/00/05/33/91/53/b_0005339153.gif",
+      "productName": "아크릴스탠드",
+      "star": "⭐️⭐️⭐️",
+      "likes": 0
+    },
+    {
+      "id": 4,
+      "nickname": "nickname4",
+      "content": "별로",
+      "productUrl": "URL",
+      "productImg": "https://image2.daisomall.co.kr/data/daiso_data/images/product/00/04/49/81/35/b_0004498135.gif",
+      "productName": "탁상시계",
+      "imgUrl": "URL",
+      "star": "⭐️⭐️",
+      "likes": 0
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
