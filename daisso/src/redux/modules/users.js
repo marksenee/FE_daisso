@@ -3,6 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import generateToken from "../../utils/Token";
 import { setCookie, removeCookie } from "../../utils/Cookie";
+import { useNavigate } from "react-router-dom";
 
 // url
 const REACT_APP_API_USERS_URL = `http://localhost:3001/users`;
@@ -21,23 +22,21 @@ export const __getUser = createAsyncThunk(
   async (payload, thunkAPI) => {
     const { userId, password } = payload;
     try {
-      await axios
-        .get(REACT_APP_API_USERS_URL + `?userId=${userId}`)
-        .then((res) => {
-          if (res.data[0] == undefined) {
-            alert("사용자가 존재하지 않습니다.");
-          } else {
-            if (res.data[0].password === password) {
-              alert("로그인 성공");
-              const token = generateToken(userId); // 임시 토큰
-              setCookie("access_token", token);
-              return thunkAPI.fulfillWithValue(res.data);
-            } else {
-              alert("비밀번호를 다시 확인하세요");
-              return thunkAPI.rejectWithValue("비밀번호를 다시 확인하세요");
-            }
-          }
-        });
+      const { data } = await axios.get(
+        REACT_APP_API_USERS_URL + `?userId=${userId}`
+      );
+      const user = data[0];
+      if (user === undefined) {
+        return thunkAPI.rejectWithValue("noUser");
+      } else {
+        if (user.password === password) {
+          const token = generateToken(userId); // 임시 토큰
+          setCookie("access_token", token);
+          return thunkAPI.fulfillWithValue("success");
+        } else {
+          return thunkAPI.rejectWithValue("checkPassword");
+        }
+      }
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -66,11 +65,16 @@ export const users = createSlice({
     [__createUsers.pending]: (state, action) => {
       state.isLoding = true; // 네트워크 요청 시작시, 로딩 상태를 true로 변경
     },
+    [__getUser.fulfilled]: (state, action) => {
+      console.log("action", action.payload);
+      state.isLoding = true;
+    },
     [__createUsers.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.users = state.users.concat({
         id: action.payload.id,
         userId: action.payload.userId,
+        nickName: action.payload.nickName,
       });
     },
     [__createUsers.rejected]: (state, action) => {
