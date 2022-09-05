@@ -3,7 +3,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import generateToken from "../../utils/Token";
 import { setCookie, removeCookie } from "../../utils/Cookie";
-import { useNavigate } from "react-router-dom";
 
 // url
 const REACT_APP_API_USERS_URL = `http://localhost:3001/users`;
@@ -49,7 +48,7 @@ export const __getUser = createAsyncThunk(
         if (user.password === password) {
           const token = generateToken(userId); // 임시 토큰
           setCookie("access_token", token);
-          return thunkAPI.fulfillWithValue("success");
+          return thunkAPI.fulfillWithValue(["success", userId]);
         } else {
           return thunkAPI.rejectWithValue("checkPassword");
         }
@@ -60,12 +59,36 @@ export const __getUser = createAsyncThunk(
   }
 );
 
+//[로그인]
+export const __login = createAsyncThunk("login", async (payload, thunkAPI) => {
+  try {
+    const { data } = await axios.post(REACT_APP_API_USERS_URL, payload);
+    return thunkAPI.fulfillWithValue(data);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 // [회원가입]
 export const __createUsers = createAsyncThunk(
   "createUsers",
   async (newUser, thunkAPI) => {
     try {
       const { data } = await axios.post(REACT_APP_API_USERS_URL, newUser);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+//[로그아웃]
+export const __logoutUsers = createAsyncThunk(
+  "logoutUsers",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.post(REACT_APP_API_USERS_URL);
+      removeCookie("access_token");
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -82,8 +105,10 @@ export const users = createSlice({
     [__createUsers.pending]: (state, action) => {
       state.isLoding = true; // 네트워크 요청 시작시, 로딩 상태를 true로 변경
     },
+    // fulfill
     [__getUser.fulfilled]: (state, action) => {
       state.isLoding = true;
+      state.users = state.users.concat({ userId: action.payload[1] });
     },
     [__doubleCheck.fulfilled]: (state, action) => {
       state.isLoding = true;
@@ -96,6 +121,17 @@ export const users = createSlice({
         nickName: action.payload.nickName,
       });
     },
+    [__login.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.users = state.users.concat({
+        id: action.payload.id,
+        userId: action.payload.userId,
+      });
+    },
+    [__logoutUsers.fulfilled]: (state, action) => {
+      state.isLoding = true;
+    },
+    // reject
     [__createUsers.rejected]: (state, action) => {
       state.isLoading = false;
     },
@@ -103,6 +139,9 @@ export const users = createSlice({
       state.isLoading = false;
     },
     [__doubleCheck.rejected]: (state, action) => {
+      state.isLoading = false;
+    },
+    [__logoutUsers.rejected]: (state, action) => {
       state.isLoading = false;
     },
   },
