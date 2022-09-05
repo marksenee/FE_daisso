@@ -16,6 +16,23 @@ const initialState = {
 };
 
 // thunk function
+// [프론트 처리 - 중복확인] --> 백엔드 연동시 사용x
+export const __doubleCheck = createAsyncThunk(
+  "doubleCheck",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.get(REACT_APP_API_USERS_URL);
+      const userData = data.find((element) => element.userId === payload);
+      if (!userData) {
+        return thunkAPI.fulfillWithValue("success");
+      } else {
+        return thunkAPI.rejectWithValue("reject");
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 // [특정 사용자 확인 - 로그인]
 export const __getUser = createAsyncThunk(
   "getUser",
@@ -66,7 +83,9 @@ export const users = createSlice({
       state.isLoding = true; // 네트워크 요청 시작시, 로딩 상태를 true로 변경
     },
     [__getUser.fulfilled]: (state, action) => {
-      console.log("action", action.payload);
+      state.isLoding = true;
+    },
+    [__doubleCheck.fulfilled]: (state, action) => {
       state.isLoding = true;
     },
     [__createUsers.fulfilled]: (state, action) => {
@@ -81,6 +100,9 @@ export const users = createSlice({
       state.isLoading = false;
     },
     [__getUser.rejected]: (state, action) => {
+      state.isLoading = false;
+    },
+    [__doubleCheck.rejected]: (state, action) => {
       state.isLoading = false;
     },
   },
