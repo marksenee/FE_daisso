@@ -17,7 +17,7 @@ import {
 
 function Modal({ modalHandler }) {
   // url
-  const REACT_APP_API_USERS_URL = `http://localhost:5001/users`;
+  const REACT_APP_API_USERS_URL = `http://localhost:3001/users`;
 
   const dispatch = useDispatch();
 
