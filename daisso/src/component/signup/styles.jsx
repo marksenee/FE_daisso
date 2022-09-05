@@ -3,7 +3,7 @@ import styled from "styled-components";
 const ModalBox = styled.div`
   position: absolute;
   width: 650px;
-  height: 520px;
+  height: 560px;
   background-color: white;
   border-style: solid;
   border-color: #ddd;
@@ -21,10 +21,10 @@ const ModalBox = styled.div`
 
 const SignupForm = styled.div`
   width: 380px;
-  height: 250px;
+  height: 260px;
   background-color: white;
   display: inline-block;
-  margin: 15px 0px 10px 70px;
+  margin: 25px 0px 20px 70px;
 `;
 
 const SignupFormField = styled.input`
@@ -34,7 +34,7 @@ const SignupFormField = styled.input`
   border-style: solid;
   border-radius: 10px;
   border-color: #ddd;
-  margin: 5px 5px 5px 15px;
+  margin: 10px 5px 5px 15px;
 `;
 
 const DoubleCheckButton = styled.button`
@@ -53,7 +53,7 @@ const DoubleCheckButton = styled.button`
 `;
 
 const SignupButton = styled.button`
-  width: 100px;
+  width: 270px;
   height: 40px;
   /* background-color: #616161; */
   background-color: ${(props) => (props.disabled ? "#616161" : "red")};
@@ -61,7 +61,7 @@ const SignupButton = styled.button`
   border-style: solid;
   border-radius: 10px;
   border-color: transparent;
-  margin: 5px 10px 10px 10px;
+  margin: 30px 10px 10px 10px;
 
   &:hover {
     background-color: #e0e0e0;
@@ -77,7 +77,7 @@ const CloseButton = styled.button`
   height: 40px;
   position: relative;
   left: -40%;
-  transform: translate(-70%, -70%);
+  transform: translate(-70%, -50%);
 
   background-color: white;
   color: #616161;
@@ -111,7 +111,7 @@ const Background = styled.div`
   z-index: 0;
 `;
 
-const PasswordMessage = styled.span`
+const Message = styled.span`
   /* width: 250px; */
   font-size: 11px;
   color: red;
@@ -128,6 +128,6 @@ export {
   SignupButton,
   CloseButton,
   Background,
-  PasswordMessage,
+  Message,
   SignupButtonStyle,
 };

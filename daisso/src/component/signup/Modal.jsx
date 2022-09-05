@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useState, useCallback, useEffect } from "react";
 import ReactDom from "react-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { __createUsers } from "../../redux/modules/users";
-import useUserIdValidationCheck from "../../hooks/useEmailValidation";
+import useInput from "../../hooks/useInput";
 import {
   ModalBox,
   SignupForm,
@@ -12,14 +12,17 @@ import {
   SignupButton,
   CloseButton,
   Background,
-  PasswordMessage,
+  Message,
 } from "./styles";
 
 function Modal({ modalHandler }) {
+  // url
+  const REACT_APP_API_USERS_URL = `http://localhost:5001/users`;
+
   const dispatch = useDispatch();
 
-  const [userId, setUserId] = useState("");
-  const [nickName, setNickName] = useState("");
+  const [userId, setUserId, onChangeUserId] = useInput();
+  const [nickName, setNickName, onChangeNickName] = useInput();
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
@@ -31,15 +34,37 @@ function Modal({ modalHandler }) {
 
   // 오류 메세지
   const [userIdMessage, setUserIdMessage] = useState("");
+  const [nickNameMessage, setNickNameMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
-  const onChangeUserId = (e) => {
-    setUserId(e.target.value);
-  };
+  const { users } = useSelector((state) => state.users);
+  console.log("users", users);
 
-  const onChangeNickName = (e) => {
-    setNickName(e.target.value);
+  // 아이디 & 닉네임 중복확인
+  const doubleCheck = async (
+    keyName,
+    data,
+    setData,
+    setDataMessage,
+    setDataMessageDetail
+  ) => {
+    try {
+      await axios
+        .post(REACT_APP_API_USERS_URL, {
+          [keyName]: data,
+        })
+        .then((res) => {
+          if (res.status === 201) {
+            //json-server는 201
+            setData(true);
+            setDataMessage(`사용가능한 ${setDataMessageDetail} 입니다.`);
+          }
+        });
+    } catch (err) {
+      setData(false);
+      setDataMessage(`중복된 ${setDataMessageDetail} 입니다.`);
+    }
   };
 
   const onChangePasswordConfirm = (e) => {
@@ -78,19 +103,6 @@ function Modal({ modalHandler }) {
     passwordConfirm,
   };
 
-  // 유효성 검사
-  const userIdValidation = useUserIdValidationCheck(userId);
-
-  const validationCheck = () => {
-    if (!userIdValidation) {
-      setUserIdMessage("이메일 형식을 확인하세요");
-      setIsUserId(false);
-    } else {
-      setUserIdMessage(" ");
-      setIsUserId(true);
-    }
-  };
-
   // 회원가입
   const onSubmitSignup = (data) => {
     dispatch(__createUsers(data));
@@ -111,20 +123,47 @@ function Modal({ modalHandler }) {
             value={userId}
             onChange={onChangeUserId}
           />
-          <DoubleCheckButton onClick={() => validationCheck()}>
+          <DoubleCheckButton
+            onClick={() =>
+              doubleCheck(
+                "userId",
+                userId,
+                setIsUserId,
+                setUserIdMessage,
+                "아이디"
+              )
+            }
+          >
             중복확인
           </DoubleCheckButton>
           {isUserId ? (
-            <PasswordMessage>{userIdMessage}</PasswordMessage>
+            <Message>{userIdMessage}</Message>
           ) : (
-            <PasswordMessage>{userIdMessage}</PasswordMessage>
+            <Message>{userIdMessage}</Message>
           )}
           <SignupFormField
             placeholder="닉네임"
             value={nickName}
             onChange={onChangeNickName}
           />
-          <DoubleCheckButton>중복확인</DoubleCheckButton>
+          <DoubleCheckButton
+            onClick={() =>
+              doubleCheck(
+                "nickName",
+                nickName,
+                setIsNickName,
+                setNickNameMessage,
+                "닉네임"
+              )
+            }
+          >
+            중복확인
+          </DoubleCheckButton>
+          {isNickName ? (
+            <Message>{nickNameMessage}</Message>
+          ) : (
+            <Message>{nickNameMessage}</Message>
+          )}
           <SignupFormField
             placeholder="비밀번호"
             value={password}
@@ -132,9 +171,9 @@ function Modal({ modalHandler }) {
             onChange={onChangePassword}
           />
           {isPassword ? (
-            <PasswordMessage>{passwordMessage}</PasswordMessage>
+            <Message>{passwordMessage}</Message>
           ) : (
-            <PasswordMessage>{passwordMessage}</PasswordMessage>
+            <Message>{passwordMessage}</Message>
           )}
           <SignupFormField
             placeholder="비밀번호 확인"
@@ -143,15 +182,16 @@ function Modal({ modalHandler }) {
             onChange={onChangePasswordConfirm}
           />
           {isPasswordConfirm ? (
-            <PasswordMessage>{passwordConfirmMessage}</PasswordMessage>
+            <Message>{passwordConfirmMessage}</Message>
           ) : (
-            <PasswordMessage>{passwordConfirmMessage}</PasswordMessage>
+            <Message>{passwordConfirmMessage}</Message>
           )}
         </SignupForm>
-        {/* isNickName 추가해야 함*/}
         <SignupButton
           onClick={() => onSubmitSignup(body)}
-          disabled={!(isUserId && isPassword && isPasswordConfirm)}
+          disabled={
+            !(isUserId && isNickName && isPassword && isPasswordConfirm)
+          }
         >
           회원가입
         </SignupButton>
