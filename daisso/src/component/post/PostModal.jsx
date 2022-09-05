@@ -1,28 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { __getPost } from "../../redux/modules/postSlice";
 
 function PostModal() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { post } = useSelector((state) => state.post);
+  const { id } = useParams();
+  const review = post.find((eachpost) => eachpost.id === +id);
+
+  const onClickUrlHandler = () => {
+    window.open(review.productUrl);
+  };
+
+  const goBack = () => {
+    window.history.back();
+  };
+
+  useEffect(() => {
+    dispatch(__getPost());
+  }, [dispatch]);
+
   return (
     <ModalBack>
       <ModalBox>
         <ModalHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <div>걸이형 집게</div> <ModalLinkBtn>바로가기</ModalLinkBtn>
+            <div>{review?.productName}</div>{" "}
+            <ModalLinkBtn onClick={onClickUrlHandler}>바로가기</ModalLinkBtn>
           </div>
-          <div>𝐗</div>
+          <div onClick={goBack}>𝐗</div>
         </ModalHeader>
         <ModalNickStar>
-          <p>닉네임</p>
-          <p>⭐️⭐️⭐️⭐️⭐️</p>
+          <p>{review?.nickname}</p>
+          <p>{review?.star}</p>
         </ModalNickStar>
-        <ModalPhoto src="https://image2.daisomall.co.kr/data/daiso_data/images/product/00/04/47/08/99/b_0004470899.gif" />
-        <ModalText>집게가 잘 집히고 어쩌구</ModalText>
+        {/* TODO: 첨부 기능 구현시 ImgUrl로 변경  */}
+        <ModalPhoto src={review?.productImg} />
+        <ModalText>{review?.content}</ModalText>
         <ModalFooter>
           <div>
             <ModalBtn>수정</ModalBtn>
             <ModalBtn>삭제</ModalBtn>
           </div>
-          <p style={{ fontSize: "1.4em", marginTop: "0px" }}>❤️</p>
+          {/* TODO: 기본-흰 하트, 좋아요 클릭-빨간 하트 */}
+          <p style={{ fontSize: "1.5em", marginTop: "0px" }}>🤍❤️</p>
         </ModalFooter>
       </ModalBox>
     </ModalBack>
@@ -37,7 +61,7 @@ const ModalBack = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
@@ -48,7 +72,7 @@ const ModalBox = styled.div`
   border: 1px solid lightgray;
   border-radius: 5px;
   background-color: white;
-  z-index: 999;
+  z-index: 1;
   width: 500px;
   height: 700px;
   position: absolute;
@@ -64,7 +88,7 @@ const ModalHeader = styled.div`
   margin: 0px 0px 5px 0px;
   padding-bottom: 13px;
   border-bottom: 1.5px solid #da3731;
-  font-size: 1.55em;
+  font-size: 1.4em;
   font-weight: bold;
   align-items: center;
 `;

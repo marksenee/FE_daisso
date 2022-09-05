@@ -13,7 +13,6 @@ function Posts() {
   useEffect(() => {
     dispatch(__getPost());
   }, [dispatch]);
-  console.log(post);
 
   if (isLoading) {
     <div>로딩 중...</div>;
