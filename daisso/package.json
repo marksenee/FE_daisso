@@ -23,6 +23,7 @@
   },
   "scripts": {
     "server-start": "json-server --watch db.json --port 5001",
+    "json-server": "json-server --watch response.json --port 3001",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

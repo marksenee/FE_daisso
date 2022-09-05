@@ -1,13 +1,13 @@
 import React from "react";
 import Layout from "../component/layout/Layout";
 import Main from "../component/main/Main";
-import Post from "../component/post/Post";
+import Posts from "../component/post/Posts";
 
 function MainPage() {
   return (
     <Layout>
       <Main />
-      <Post />
+      <Posts />
     </Layout>
   );
 }

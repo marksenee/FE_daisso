@@ -1,100 +1,21 @@
 import React from "react";
-import PostModal from "./PostModal";
-import { PostDiv, PostBox, PostContent } from "./styles";
+import { useNavigate } from "react-router-dom";
+import { PostBox, PostContent } from "./styles";
 
-function Post() {
+function Post({ eachpost }) {
+  const navigate = useNavigate();
   return (
-    <PostDiv>
-      <PostBox>
-        {/* <PostModal /> */}
-        <PostContent>
-          <img
-            src="https://image2.daisomall.co.kr/data/daiso_data/images/product/00/05/33/91/53/b_0005339153.gif"
-            width="200"
-            height="200"
-          />
-          <p>대충 제품명</p>
-          <div>⭐️⭐️⭐️⭐️⭐️</div>
-        </PostContent>
-      </PostBox>
-      <PostBox>
-        <PostContent>
-          <img
-            src="https://image2.daisomall.co.kr/data/daiso_data/images/product/00/04/27/88/56/b_0004278856.gif"
-            width="200"
-            height="200"
-          />
-          <p>대충 제품명</p>
-          <div>⭐️⭐️⭐️⭐️⭐️</div>
-        </PostContent>
-      </PostBox>{" "}
-      <PostBox>
-        <PostContent>
-          <img
-            src="https://image2.daisomall.co.kr/data/daiso_data/images/product/00/04/47/08/99/b_0004470899.gif"
-            width="200"
-            height="200"
-          />
-          <p>대충 제품명</p>
-          <div>⭐️⭐️⭐️⭐️⭐️</div>
-        </PostContent>
-      </PostBox>{" "}
-      <PostBox>
-        <PostContent>
-          <img
-            src="https://image2.daisomall.co.kr/data/daiso_data/images/product/00/04/49/81/35/b_0004498135.gif"
-            width="200"
-            height="200"
-          />
-          <p>대충 제품명</p>
-          <div>⭐️⭐️⭐️⭐️⭐️</div>
-        </PostContent>
-      </PostBox>
-      <PostBox>
-        <PostContent>
-          <img
-            src="https://image2.daisomall.co.kr/data/daiso_data/images/product/00/05/33/91/53/b_0005339153.gif"
-            width="200"
-            height="200"
-          />
-          <p>대충 제품명</p>
-          <div>⭐️⭐️⭐️⭐️⭐️</div>
-        </PostContent>
-      </PostBox>
-      <PostBox>
-        <PostContent>
-          <img
-            src="https://image2.daisomall.co.kr/data/daiso_data/images/product/00/04/27/88/56/b_0004278856.gif"
-            width="200"
-            height="200"
-          />
-          <p>대충 제품명</p>
-          <div>⭐️⭐️⭐️⭐️⭐️</div>
-        </PostContent>
-      </PostBox>{" "}
-      <PostBox>
-        <PostContent>
-          <img
-            src="https://image2.daisomall.co.kr/data/daiso_data/images/product/00/04/47/08/99/b_0004470899.gif"
-            width="200"
-            height="200"
-          />
-          <p>대충 제품명</p>
-          <div>⭐️⭐️⭐️⭐️⭐️</div>
-        </PostContent>
-      </PostBox>{" "}
-      <PostBox>
-        <PostContent>
-          <img
-            src="https://image2.daisomall.co.kr/data/daiso_data/images/product/00/04/49/81/35/b_0004498135.gif"
-            width="200"
-            height="200"
-          />
-          <p>대충 제품명</p>
-          <div>⭐️⭐️⭐️⭐️⭐️</div>
-        </PostContent>
-      </PostBox>
-    </PostDiv>
+    <PostBox
+      onClick={() => {
+        navigate(`/post/${eachpost.id}`);
+      }}
+    >
+      <PostContent>
+        <img src={eachpost.productImg} width="200" height="200" />
+        <p>{eachpost.productName}</p>
+        <div>{eachpost.star}</div>
+      </PostContent>
+    </PostBox>
   );
 }
 

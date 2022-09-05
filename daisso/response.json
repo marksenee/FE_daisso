@@ -1,0 +1,57 @@
+{
+  "post": [
+    {
+      "id": 1,
+      "nickname": "Mark",
+      "content": "좋아요. 어떤 점이 좋냐면 구구절절 어쩌구저쩌구 두줄 넘어갈 경우 어떻게 보이는지 궁금해서 길게 쓰는 중입니다",
+      "productUrl": "https://www.daisomall.co.kr/shop/goods_view.php?id=0004470899&event_ix=14456",
+      "productImg": "https://image2.daisomall.co.kr/data/daiso_data/images/product/00/04/47/08/99/b_0004470899.gif",
+      "productName": "걸이형스텐집게(4P)",
+      "imgUrl": "URL",
+      "star": "⭐️⭐️⭐️⭐️⭐️",
+      "likes": 0
+    },
+    {
+      "id": 2,
+      "nickname": "Nick",
+      "content": "괜찮아요",
+      "productUrl": "https://www.daisomall.co.kr/shop/goods_view.php?id=0004278856&event_ix=14456",
+      "productImg": "https://image2.daisomall.co.kr/data/daiso_data/images/product/00/04/27/88/56/b_0004278856.gif",
+      "productName": "계량컵뚜껑잡곡용기1.2L",
+      "imgUrl": "URL",
+      "star": "⭐️⭐️⭐️⭐️",
+      "likes": 0
+    },
+    {
+      "id": 3,
+      "nickname": "nickname3",
+      "content": "그럭저럭",
+      "productUrl": "https://www.daisomall.co.kr/shop/goods_view.php?id=0001216063&event_ix=14456",
+      "productImg": "https://image2.daisomall.co.kr/data/daiso_data/images/product/00/01/21/60/63/b_0001216063.gif",
+      "productName": "MR.홈스타 발포배수구세정제 40G*3포",
+      "star": "⭐️⭐️⭐️",
+      "likes": 0
+    },
+    {
+      "id": 4,
+      "nickname": "nickname4",
+      "content": "별로",
+      "productUrl": "https://www.daisomall.co.kr/shop/goods_view.php?id=0004040010&event_ix=14456",
+      "productImg": "https://image2.daisomall.co.kr/data/daiso_data/images/product/00/04/04/00/10/b_0004040010.gif",
+      "productName": "스카치브라이트셀룰로오스수세미(3P)",
+      "imgUrl": "URL",
+      "star": "⭐️⭐️",
+      "likes": 0
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
