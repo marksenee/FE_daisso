@@ -35,10 +35,10 @@ function SignIn() {
       alert("아이디와 비밀번호를 입력하세요");
     } else {
       dispatch(__getUser({ userId, password })).then((res) => {
-        if (res.payload === "success") {
+        if (res.payload[0] === "success") {
           alert("로그인 성공");
           navigate(`/`);
-        } else if (res.payload === "checkPassword") {
+        } else if (res.payload[0] === "checkPassword") {
           alert("비밀번호 확인");
         } else {
           alert("사용자 정보가 없습니다.");
