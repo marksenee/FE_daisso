@@ -6,6 +6,8 @@ import {
   HeaderRight,
   HeaderUl,
   HeaderButton,
+  Animation1,
+  Animation2,
 } from "./styles";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
@@ -17,7 +19,7 @@ import { useSelector } from "react-redux";
 
 function Header() {
   const navigate = useNavigate();
-  const [view, setView] = useState(false);
+  const [view, setView] = useState(null);
   const [isModal, ModalHandler] = useShowModal();
   // token
   const token = useToken();
@@ -34,35 +36,44 @@ function Header() {
         <img src="../daisso.jpeg" alt="logo" width="75" height="75" />
       </HeaderLogo>
       <HeaderRight>
-        {/* TODO: 로그인 후 조건문 사용 */}
         {!token ? (
           <>
             {" "}
-            <HeaderButton onClick={() => navigate(`/login`)}>
-              로그인
-            </HeaderButton>
+            <HeaderButton onClick={() => navigate(`/login`)}>로그인</HeaderButton>
             <HeaderButton onClick={() => ModalHandler()}>회원가입</HeaderButton>
             <SingupModal show={isModal} modalHandler={ModalHandler} />
           </>
         ) : (
           <HeaderUl
             onClick={() => {
-              setView(!view);
+              setView((prev) => {
+                return !prev ? true : false;
+              });
             }}
           >
             반가워요, nickName 님!{" "}
-            {view ? (
-              <KeyboardArrowUpIcon
-                viewBox="0 -5 24 24"
-                style={{ marginLeft: "5px" }}
-              />
-            ) : (
-              <KeyboardArrowDownIcon
-                viewBox="0 -5 24 24"
-                style={{ marginLeft: "5px" }}
-              />
+            {view === null && (
+              <div>
+                <KeyboardArrowDownIcon viewBox="0 -7 24 24" />
+              </div>
             )}
-            {view && <Dropdown />}
+            {view && (
+              <>
+                <Animation1>
+                  <div>
+                    <KeyboardArrowUpIcon viewBox="0 -5 24 24" />
+                  </div>
+                </Animation1>
+                <Dropdown />
+              </>
+            )}
+            {view === false && (
+              <Animation2>
+                <div>
+                  <KeyboardArrowUpIcon viewBox="0 -5 24 24" />
+                </div>
+              </Animation2>
+            )}
           </HeaderUl>
         )}
       </HeaderRight>

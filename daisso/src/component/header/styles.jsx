@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const HeaderDiv = styled.div`
   border-bottom: 1.5px solid #da3731;
@@ -30,6 +30,7 @@ const HeaderUl = styled.ul`
   margin: 0 auto;
   text-align: left;
   align-items: center;
+  display: flex; //DESC: UL과 아이콘 나란히 정렬
 
   float: left;
   position: relative;
@@ -41,6 +42,11 @@ const HeaderLi = styled.div`
   background-color: #fafafa;
   padding: 5px 5px 5px 20px;
   box-shadow: 3px 3px 7px #cccccc;
+  position: absolute;
+  right: 0%;
+  top: 100%;
+  width: 100px;
+  height: 100px; //DESC: position~height Dropdown 위치 설정
 
   li:hover {
     color: #da3731;
@@ -69,6 +75,32 @@ const LogoutButton = styled.button`
   margin-left: -8px;
 `;
 
+const AniUp = keyframes`
+  0% {
+    transform:rotate(0deg);
+  }
+  100%{
+    transform:rotate(180deg);
+  }
+`;
+
+const AniDown = keyframes`
+  0% {
+    transform:rotate(180deg);
+  }
+  100%{
+    transform:rotate(0deg);
+  }
+`;
+
+const Animation1 = styled.span`
+  animation: ${AniDown} 0.35s linear forwards;
+`;
+
+const Animation2 = styled.span`
+  animation: ${AniUp} 0.35s linear forwards;
+`;
+
 export {
   HeaderDiv,
   HeaderLogo,
@@ -77,4 +109,6 @@ export {
   HeaderLi,
   HeaderButton,
   LogoutButton,
+  Animation1,
+  Animation2,
 };

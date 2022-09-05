@@ -10,7 +10,7 @@ const PostDiv = styled.div`
 
 const PostBox = styled.div`
   width: 230px;
-  height: 320px;
+  height: 300px;
   /* border: 2px double lightgrey; */
   margin: 5px 0px 10px 0px;
   border-radius: 5px;
