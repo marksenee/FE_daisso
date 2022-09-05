@@ -37,22 +37,22 @@ const ChildContainer = styled.div`
 
 const ElementBox = styled.div`
   width: 450px;
-  height: 50px;
+  height: ${(props) => props.height};
   background-color: white;
 
   border-style: solid;
   border-radius: 5px;
   border-color: #ddd;
   border-width: 0.5px;
-  margin: 15px 15px 10px 20px;
+  margin: 10px 15px 10px 20px;
 
-  display: flex;
+  display: ${(props) => props.block};
   justify-content: ${(props) => props.direction};
 `;
 
-function ElementBoxStyle({ children, direction, ...rest }) {
+function ElementBoxStyle({ children, direction, height, block, ...rest }) {
   return (
-    <ElementBox direction={direction} {...rest}>
+    <ElementBox direction={direction} height={height} block={block} {...rest}>
       {children}
     </ElementBox>
   );
