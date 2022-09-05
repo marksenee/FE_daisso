@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import SingupModal from "../signup/SignUpModal";
 import useShowModal from "../../hooks/useShowModal";
 import {
@@ -14,6 +15,9 @@ import { useNavigate } from "react-router-dom";
 function SignIn() {
   const navigate = useNavigate();
   const [isModal, ModalHandler] = useShowModal();
+
+  const { users } = useSelector((state) => state.users);
+  console.log("users", users);
 
   return (
     <>
