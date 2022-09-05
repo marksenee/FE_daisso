@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useCallback, useEffect } from "react";
 import ReactDom from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { __createUsers } from "../../redux/modules/users";
+import { __createUsers, __doubleCheck } from "../../redux/modules/users";
 import useInput from "../../hooks/useInput";
 import {
   ModalBox,
@@ -41,7 +41,25 @@ function Modal({ modalHandler }) {
   const { users } = useSelector((state) => state.users);
   console.log("users", users);
 
-  // 아이디 & 닉네임 중복확인
+  // 테스트용 중복확인
+  const testDoubleCheck = (
+    data,
+    setData,
+    setDataMessage,
+    setDataMessageDetail
+  ) => {
+    dispatch(__doubleCheck(data)).then((res) => {
+      if (res.payload === "success") {
+        setData(true);
+        setDataMessage(`사용가능한 ${setDataMessageDetail} 입니다.`);
+      } else {
+        setData(false);
+        setDataMessage(`중복된 ${setDataMessageDetail} 입니다.`);
+      }
+    });
+  };
+
+  // [백엔드 연동시 사용] 아이디 & 닉네임 중복확인
   const doubleCheck = async (
     keyName,
     data,
@@ -125,13 +143,7 @@ function Modal({ modalHandler }) {
           />
           <DoubleCheckButton
             onClick={() =>
-              doubleCheck(
-                "userId",
-                userId,
-                setIsUserId,
-                setUserIdMessage,
-                "아이디"
-              )
+              testDoubleCheck(userId, setIsUserId, setUserIdMessage, "아이디")
             }
           >
             중복확인
@@ -148,8 +160,7 @@ function Modal({ modalHandler }) {
           />
           <DoubleCheckButton
             onClick={() =>
-              doubleCheck(
-                "nickName",
+              testDoubleCheck(
                 nickName,
                 setIsNickName,
                 setNickNameMessage,

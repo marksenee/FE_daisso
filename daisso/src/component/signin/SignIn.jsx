@@ -30,6 +30,7 @@ function SignIn() {
   const { users } = useSelector((state) => state.users);
 
   const onClickLogin = (userId, password) => {
+    console.log("password", password);
     if (userId === "" || password === "") {
       alert("아이디와 비밀번호를 입력하세요");
     } else {
