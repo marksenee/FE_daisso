@@ -2,28 +2,33 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { __getPost } from "../../redux/modules/postSlice";
+import { PostDiv } from "./styles";
 import Post from "./Post";
-import { PostDiv, PostBox, PostContent } from "./styles";
 
 function Posts() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { success, error, post } = useSelector((state) => state.post);
-  console.log(post);
+  const { isLoading, error, post } = useSelector((state) => state.post);
 
   useEffect(() => {
     dispatch(__getPost());
-  }, []);
+  }, [dispatch]);
+  console.log(post);
+
+  if (isLoading) {
+    <div>로딩 중...</div>;
+  }
+
+  if (error) {
+    <div>{error.message}</div>;
+  }
 
   return (
-    <>
-      <h2>최근 등록된 리뷰</h2>
-      <PostDiv>
-        {post.map((eachpost) => {
-          <Post eachpost={eachpost} key={eachpost.id} />;
-        })}
-      </PostDiv>
-    </>
+    <PostDiv>
+      {post.map((eachpost) => (
+        <Post eachpost={eachpost} key={eachpost.id} />
+      ))}
+    </PostDiv>
   );
 }
 

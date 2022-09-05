@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import post from "./modules/postSlice";
 
 const store = configureStore({
-  reducer: { post },
+  reducer: { post: post },
   devTools: process.env.NODE_ENV !== "production",
 });
 

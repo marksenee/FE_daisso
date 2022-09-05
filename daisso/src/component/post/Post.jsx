@@ -1,6 +1,5 @@
 import React from "react";
-// import PostModal from "./PostModal";
-import { PostDiv, PostBox, PostContent } from "./styles";
+import { PostBox, PostContent } from "./styles";
 
 function Post({ eachpost }) {
   return (

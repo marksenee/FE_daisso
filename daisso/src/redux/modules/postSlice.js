@@ -3,7 +3,8 @@ import axios from "axios";
 
 const initialState = {
   post: [],
-  success: true,
+  isLoading: false,
+  // success: true,
   error: null,
 };
 
@@ -24,10 +25,15 @@ export const postSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    [__getPost.pending]: (state) => {
+      state.isLoading = true;
+    },
     [__getPost.fulfilled]: (state, action) => {
+      state.isLoading = false;
       state.post = action.payload;
     },
     [__getPost.rejected]: (state, action) => {
+      state.isLoading = false;
       state.error = action.payload;
     },
   },
