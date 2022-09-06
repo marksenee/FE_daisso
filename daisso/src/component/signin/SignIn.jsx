@@ -11,18 +11,13 @@ import {
   ButtonElement,
   LogoButton,
 } from "./styles";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
-import useToken from "../../hooks/useToken";
-import axios from "axios";
 
 function SignIn() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-
-  const { pathname } = useLocation();
-  const token = useToken();
 
   const [isModal, ModalHandler] = useShowModal();
   const [userId, setUserId, onChange] = useInput();
@@ -35,7 +30,6 @@ function SignIn() {
       alert("아이디와 비밀번호를 입력하세요");
     } else {
       dispatch(__login({ userId, password })).then((res) => {
-        console.log("res", res.payload);
         if (res.payload.success) {
           alert("로그인 성공");
           navigate(`/`);
