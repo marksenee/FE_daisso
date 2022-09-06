@@ -58,12 +58,12 @@ function PostReviewComponent() {
     formData.append("content", content);
     formData.append("star", star);
 
-    for (let value of formData.values()) {
-      // 값 확인
-      console.log("formdata", value);
-    }
+    // for (let value of formData.values()) {
+    //   // 값 확인
+    //   console.log("formdata", value);
+    // }
   };
-  console.log(onHandleClick());
+  // console.log(onHandleClick());
 
   return (
     <Container>
