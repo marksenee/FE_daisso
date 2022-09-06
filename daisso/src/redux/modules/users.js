@@ -5,7 +5,7 @@ import generateToken from "../../utils/Token";
 import { setCookie, removeCookie } from "../../utils/Cookie";
 
 // url
-const REACT_APP_API_USERS_URL = `http://localhost:3001/users`;
+const REACT_APP_API_USERS_URL = `http://15.164.224.94/api/member/signup`;
 
 // initialState
 const initialState = {
