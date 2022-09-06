@@ -2,11 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import generateToken from "../../utils/Token";
-import { setCookie, removeCookie } from "../../utils/Cookie";
+import { setCookie, removeCookie, getCookie } from "../../utils/Cookie";
 
 // url
 const REACT_APP_API_USERS_URL = `http://15.164.224.94/api/member/signup`;
 const REACT_APP_API_LOGIN_URL = `http://15.164.224.94/api/member/login`;
+const REACT_APP_API_LOGOUT_URL = `http://15.164.224.94/api/auth/member/logout`;
 
 // initialState
 const initialState = {
@@ -65,9 +66,18 @@ export const __login = createAsyncThunk("login", async (payload, thunkAPI) => {
   try {
     const response = await axios.post(REACT_APP_API_LOGIN_URL, payload);
     const data = response.data;
+    console.log("response", response.headers);
     if (response.data.success) {
-      const token = response.headers.authorization.slice(6);
-      setCookie("access_token", token);
+      const access_token = response.headers["authorization"];
+      const refresh_token = response.headers["refresh-token"];
+      console.log("access_token", access_token);
+      console.log("refresh_token", refresh_token);
+
+      setCookie("access_token", access_token);
+      setCookie("refresh_token", refresh_token);
+      console.log("access_token2", getCookie(access_token));
+      console.log("refresh_token2", getCookie(refresh_token));
+
       return thunkAPI.fulfillWithValue(data);
     } else {
       return thunkAPI.rejectWithValue("error");
@@ -97,9 +107,17 @@ export const __logoutUsers = createAsyncThunk(
   "logoutUsers",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.post(REACT_APP_API_USERS_URL);
+      const access = getCookie("access_token");
+      const refresh = getCookie("refresh_token");
+
+      axios.defaults.headers.common["authorization"] = access;
+      axios.defaults.headers.common["refresh-token"] = refresh;
+
+      const response = await axios.post(REACT_APP_API_LOGOUT_URL);
+      console.log("response", response.data);
       removeCookie("access_token");
-      return thunkAPI.fulfillWithValue(data);
+      removeCookie("refresh_token");
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
