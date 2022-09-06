@@ -4,6 +4,7 @@ import { PostBox, PostContent } from "./styles";
 
 function Post({ eachpost }) {
   const navigate = useNavigate();
+  const star = "⭐️".repeat(eachpost.star);
   return (
     <PostBox
       onClick={() => {
@@ -24,7 +25,7 @@ function Post({ eachpost }) {
         >
           {eachpost.productName}
         </p>
-        <div>{eachpost.star}</div>
+        <div>{star}</div>
       </PostContent>
     </PostBox>
   );

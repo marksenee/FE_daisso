@@ -9,6 +9,8 @@ function Posts() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoading, error, post } = useSelector((state) => state.post);
+  const apost = post.data;
+  console.log(apost);
 
   useEffect(() => {
     dispatch(__getPost());
@@ -24,7 +26,7 @@ function Posts() {
 
   return (
     <PostDiv>
-      {post.map((eachpost) => (
+      {apost?.map((eachpost) => (
         <Post eachpost={eachpost} key={eachpost.id} />
       ))}
     </PostDiv>

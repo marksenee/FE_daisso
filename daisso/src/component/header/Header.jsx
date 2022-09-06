@@ -35,9 +35,7 @@ function Header() {
         {!token ? (
           <>
             {" "}
-            <HeaderButton onClick={() => navigate(`/login`)}>
-              로그인
-            </HeaderButton>
+            <HeaderButton onClick={() => navigate(`/login`)}>로그인</HeaderButton>
             <HeaderButton onClick={() => ModalHandler()}>회원가입</HeaderButton>
             <SingupModal show={isModal} modalHandler={ModalHandler} />
           </>

@@ -2,25 +2,22 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { __getPost } from "../../redux/modules/postSlice";
+import { __getPostDetail } from "../../redux/modules/postSlice";
 
 function PostModal() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { post } = useSelector((state) => state.post);
+  const { detail } = useSelector((state) => state.post);
+  const apost = detail.data;
   const { id } = useParams();
-  const review = post.find((eachpost) => eachpost.id === +id);
+  const star = "⭐️".repeat(apost?.star);
 
   const onClickUrlHandler = () => {
-    window.open(review.productUrl);
-  };
-
-  const goBack = () => {
-    window.history.back();
+    window.open(apost?.productUrl);
   };
 
   useEffect(() => {
-    dispatch(__getPost());
+    dispatch(__getPostDetail(id));
   }, [dispatch]);
 
   return (
@@ -28,18 +25,24 @@ function PostModal() {
       <ModalBox>
         <ModalHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <div>{review?.productName}</div>{" "}
+            <div>{apost?.productName}</div>{" "}
             <ModalLinkBtn onClick={onClickUrlHandler}>바로가기</ModalLinkBtn>
           </div>
-          <div onClick={goBack}>𝐗</div>
+          <div
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            𝐗
+          </div>
         </ModalHeader>
         <ModalNickStar>
-          <p>{review?.nickname}</p>
-          <p>{review?.star}</p>
+          <p>{apost?.nickname}</p>
+          <p>{star}</p>
         </ModalNickStar>
         {/* TODO: 첨부 기능 구현시 ImgUrl로 변경  */}
-        <ModalPhoto src={review?.productImg} />
-        <ModalText>{review?.content}</ModalText>
+        <ModalPhoto src={apost?.productImg} />
+        <ModalText>{apost?.content}</ModalText>
         <ModalFooter>
           <div>
             <ModalBtn>수정</ModalBtn>
