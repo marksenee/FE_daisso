@@ -15,8 +15,7 @@ import { useNavigate } from "react-router-dom";
 import SingupModal from "../signup/SignUpModal";
 import useShowModal from "../../hooks/useShowModal";
 import useToken from "../../hooks/useToken";
-import jwt_decode from "jwt-decode";
-import { useSelector } from "react-redux";
+import useDecodeToken from "../../hooks/useDecodeToken";
 
 function Header() {
   const navigate = useNavigate();
@@ -25,8 +24,7 @@ function Header() {
 
   // token
   const token = useToken();
-  const decode_token = jwt_decode(token);
-  const nickName = decode_token.sub;
+  const nickName = useDecodeToken(token);
 
   return (
     <HeaderDiv>
