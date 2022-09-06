@@ -6,6 +6,7 @@ import { setCookie, removeCookie } from "../../utils/Cookie";
 
 // url
 const REACT_APP_API_USERS_URL = `http://15.164.224.94/api/member/signup`;
+const REACT_APP_API_LOGIN_URL = `http://15.164.224.94/api/member/login`;
 
 // initialState
 const initialState = {
@@ -62,8 +63,15 @@ export const __getUser = createAsyncThunk(
 //[로그인]
 export const __login = createAsyncThunk("login", async (payload, thunkAPI) => {
   try {
-    const { data } = await axios.post(REACT_APP_API_USERS_URL, payload);
-    return thunkAPI.fulfillWithValue(data);
+    const response = await axios.post(REACT_APP_API_LOGIN_URL, payload);
+    const data = response.data;
+    if (response.data.success) {
+      const token = response.headers.authorization.slice(6);
+      setCookie("access_token", token);
+      return thunkAPI.fulfillWithValue(data);
+    } else {
+      return thunkAPI.rejectWithValue("error");
+    }
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
@@ -73,8 +81,10 @@ export const __login = createAsyncThunk("login", async (payload, thunkAPI) => {
 export const __createUsers = createAsyncThunk(
   "createUsers",
   async (newUser, thunkAPI) => {
+    console.log("hello", newUser);
     try {
       const { data } = await axios.post(REACT_APP_API_USERS_URL, newUser);
+      console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
