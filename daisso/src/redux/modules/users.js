@@ -2,10 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import generateToken from "../../utils/Token";
-import { setCookie, removeCookie } from "../../utils/Cookie";
+import { setCookie, removeCookie, getCookie } from "../../utils/Cookie";
 
 // url
 const REACT_APP_API_USERS_URL = `http://15.164.224.94/api/member/signup`;
+const REACT_APP_API_LOGIN_URL = `http://15.164.224.94/api/member/login`;
+const REACT_APP_API_LOGOUT_URL = `http://15.164.224.94/api/auth/member/logout`;
+const REACT_APP_API_DOUBLECHECK_URL = `http://15.164.224.94/api/member/`;
+const REACT_APP_API_DOUBLECHECK_ID_URL = `http://15.164.224.94/api/member/checkId`;
+const REACT_APP_API_DOUBLECHECK_NAME_URL = `http://15.164.224.94/api/member/checkNickname`;
 
 // initialState
 const initialState = {
@@ -15,23 +20,6 @@ const initialState = {
 };
 
 // thunk function
-// [프론트 처리 - 중복확인] --> 백엔드 연동시 사용x
-export const __doubleCheck = createAsyncThunk(
-  "doubleCheck",
-  async (payload, thunkAPI) => {
-    try {
-      const { data } = await axios.get(REACT_APP_API_USERS_URL);
-      const userData = data.find((element) => element.userId === payload);
-      if (!userData) {
-        return thunkAPI.fulfillWithValue("success");
-      } else {
-        return thunkAPI.rejectWithValue("reject");
-      }
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
 // [특정 사용자 확인 - 로그인]
 export const __getUser = createAsyncThunk(
   "getUser",
@@ -62,12 +50,39 @@ export const __getUser = createAsyncThunk(
 //[로그인]
 export const __login = createAsyncThunk("login", async (payload, thunkAPI) => {
   try {
-    const { data } = await axios.post(REACT_APP_API_USERS_URL, payload);
-    return thunkAPI.fulfillWithValue(data);
+    const response = await axios.post(REACT_APP_API_LOGIN_URL, payload);
+    const data = response.data;
+    if (response.data.success) {
+      const access_token = response.headers["authorization"];
+      const refresh_token = response.headers["refresh-token"];
+      setCookie("access_token", access_token);
+      setCookie("refresh_token", refresh_token);
+      return thunkAPI.fulfillWithValue(data);
+    } else {
+      return thunkAPI.rejectWithValue("error");
+    }
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
 });
+
+//[중복확인]
+export const __doubleCheck = createAsyncThunk(
+  "doubleCheck",
+  async (payload, thunkAPI) => {
+    const path = payload[1];
+    const object_data = payload[0];
+    try {
+      const { data } = await axios.post(
+        REACT_APP_API_DOUBLECHECK_URL + path,
+        object_data
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 // [회원가입]
 export const __createUsers = createAsyncThunk(
@@ -87,9 +102,16 @@ export const __logoutUsers = createAsyncThunk(
   "logoutUsers",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.post(REACT_APP_API_USERS_URL);
+      const access = getCookie("access_token");
+      const refresh = getCookie("refresh_token");
+
+      axios.defaults.headers.common["authorization"] = access;
+      axios.defaults.headers.common["refresh-token"] = refresh;
+
+      const response = await axios.post(REACT_APP_API_LOGOUT_URL);
       removeCookie("access_token");
-      return thunkAPI.fulfillWithValue(data);
+      removeCookie("refresh_token");
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

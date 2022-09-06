@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SingupModal from "../signup/SignUpModal";
 import useShowModal from "../../hooks/useShowModal";
-import { __getUser } from "../../redux/modules/users";
+import { __getUser, __login } from "../../redux/modules/users";
 import {
   ContainerStyle,
   LoginContainer,
@@ -11,17 +11,13 @@ import {
   ButtonElement,
   LogoButton,
 } from "./styles";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
-import useToken from "../../hooks/useToken";
 
 function SignIn() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-
-  const { pathname } = useLocation();
-  const token = useToken();
 
   const [isModal, ModalHandler] = useShowModal();
   const [userId, setUserId, onChange] = useInput();
@@ -30,18 +26,15 @@ function SignIn() {
   const { users } = useSelector((state) => state.users);
 
   const onClickLogin = (userId, password) => {
-    console.log("password", password);
     if (userId === "" || password === "") {
       alert("아이디와 비밀번호를 입력하세요");
     } else {
-      dispatch(__getUser({ userId, password })).then((res) => {
-        if (res.payload[0] === "success") {
+      dispatch(__login({ userId, password })).then((res) => {
+        if (res.payload.success) {
           alert("로그인 성공");
           navigate(`/`);
-        } else if (res.payload[0] === "checkPassword") {
-          alert("비밀번호 확인");
-        } else {
-          alert("사용자 정보가 없습니다.");
+        } else if (res.payload == "error") {
+          alert("아이디와 비밀번호를 다시 확인해주세요");
         }
       });
     }

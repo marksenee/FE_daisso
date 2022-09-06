@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import Layout from "../../layout/Layout";
 import ReviewHeader from "../header/Header";
+import useInput from "../../../hooks/useInput";
+import useImageInput from "../../../hooks/useImageInput";
 import {
   Container,
   ParentContainer,
@@ -19,23 +21,50 @@ import {
 function EditReview() {
   return (
     <>
-      <Layout children={<EditReviewComponent />} />
-      {/* <ReviewHeader children={<EditReviewComponent />} /> */}
+      {/* <Layout children={<EditReviewComponent />} /> */}
+      <Layout>
+        <EditReviewComponent />
+      </Layout>
     </>
   );
 }
 
 function EditReviewComponent() {
   const array = [0, 1, 2, 3, 4];
-  const [clicked, setClicked] = useState([false, false, false, false, false]);
+  const [star, setStar] = useState([false, false, false, false, false]);
 
   const handleStarClick = (index) => {
-    let clickStates = [...clicked];
-    for (let i = 0; i < 5; i++) {
-      clickStates[i] = i <= index ? true : false;
+    let starStatus = [...star];
+    for (let i = 0; i < starStatus.length; i++) {
+      if (i <= index) {
+        starStatus[i] = true;
+      } else {
+        starStatus[i] = false;
+      }
     }
-    setClicked(clickStates);
+    setStar(starStatus);
   };
+
+  const [productUrl, setProductUrl, onChangeProductUrl] = useInput();
+  const [content, setContent, onChangeContent] = useInput();
+  const [image, setImage, imageUrl, setImageUrl, onChangeImage] =
+    useImageInput();
+
+  useEffect(() => {}, []);
+
+  const onHandleClick = () => {
+    const formData = new FormData();
+    formData.append("imageUrl", image);
+    formData.append("productUrl", productUrl);
+    formData.append("content", content);
+    formData.append("star", star);
+
+    // for (let value of formData.values()) {
+    //   // 값 확인
+    //   console.log("formdata", value);
+    // }
+  };
+
   return (
     <Container>
       <ParentContainer>
@@ -44,27 +73,41 @@ function EditReviewComponent() {
             <TextStyle>제품링크</TextStyle>
             <FormField placeholder="url을 입력하세요" />
           </ElementBox>
-          <ElementBox>
+          <ElementBox height="65px">
             <TextStyle>별점</TextStyle>
             <Stars>
-              {array.map((el, idx) => {
+              {array.map((i, idx) => {
                 return (
                   <FaStar
                     key={idx}
                     size="25"
-                    onClick={() => handleStarClick(el)}
-                    className={clicked[el] && "yellowStar"}
+                    onClick={() => handleStarClick(i)}
+                    className={star[i] && "yellowStar"}
                   />
                 );
               })}
             </Stars>
           </ElementBox>
-          <ReviewTextArea>구매후기</ReviewTextArea>
-          <ElementBox>
+          <ReviewTextArea
+            placeholder="구매후기"
+            name="content"
+            value={content}
+            onChange={onChangeContent}
+          />
+          <ElementBox height="300px" block="inline-block">
             <TextStyle>사진첨부</TextStyle>
-            <ImageInput type="file" />
+            <ImageInput type="file" name="imageUrl" onChange={onChangeImage} />
+            {image && (
+              <img
+                className="image-box"
+                src={imageUrl}
+                style={{ margin: "10px 0px 0px 100px" }}
+                height="150"
+                width="230"
+              />
+            )}
           </ElementBox>
-          <ElementBoxStyle direction="center">
+          <ElementBoxStyle direction="center" block="flex">
             <ButtonStyle>수정하기</ButtonStyle>
             <ButtonStyle>취소</ButtonStyle>
           </ElementBoxStyle>
