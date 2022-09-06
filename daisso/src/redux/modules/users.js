@@ -8,6 +8,9 @@ import { setCookie, removeCookie, getCookie } from "../../utils/Cookie";
 const REACT_APP_API_USERS_URL = `http://15.164.224.94/api/member/signup`;
 const REACT_APP_API_LOGIN_URL = `http://15.164.224.94/api/member/login`;
 const REACT_APP_API_LOGOUT_URL = `http://15.164.224.94/api/auth/member/logout`;
+const REACT_APP_API_DOUBLECHECK_URL = `http://15.164.224.94/api/member/`;
+const REACT_APP_API_DOUBLECHECK_ID_URL = `http://15.164.224.94/api/member/checkId`;
+const REACT_APP_API_DOUBLECHECK_NAME_URL = `http://15.164.224.94/api/member/checkNickname`;
 
 // initialState
 const initialState = {
@@ -17,23 +20,6 @@ const initialState = {
 };
 
 // thunk function
-// [프론트 처리 - 중복확인] --> 백엔드 연동시 사용x
-export const __doubleCheck = createAsyncThunk(
-  "doubleCheck",
-  async (payload, thunkAPI) => {
-    try {
-      const { data } = await axios.get(REACT_APP_API_USERS_URL);
-      const userData = data.find((element) => element.userId === payload);
-      if (!userData) {
-        return thunkAPI.fulfillWithValue("success");
-      } else {
-        return thunkAPI.rejectWithValue("reject");
-      }
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
 // [특정 사용자 확인 - 로그인]
 export const __getUser = createAsyncThunk(
   "getUser",
@@ -66,18 +52,11 @@ export const __login = createAsyncThunk("login", async (payload, thunkAPI) => {
   try {
     const response = await axios.post(REACT_APP_API_LOGIN_URL, payload);
     const data = response.data;
-    console.log("response", response.headers);
     if (response.data.success) {
       const access_token = response.headers["authorization"];
       const refresh_token = response.headers["refresh-token"];
-      console.log("access_token", access_token);
-      console.log("refresh_token", refresh_token);
-
       setCookie("access_token", access_token);
       setCookie("refresh_token", refresh_token);
-      console.log("access_token2", getCookie(access_token));
-      console.log("refresh_token2", getCookie(refresh_token));
-
       return thunkAPI.fulfillWithValue(data);
     } else {
       return thunkAPI.rejectWithValue("error");
@@ -87,14 +66,30 @@ export const __login = createAsyncThunk("login", async (payload, thunkAPI) => {
   }
 });
 
+//[중복확인]
+export const __doubleCheck = createAsyncThunk(
+  "doubleCheck",
+  async (payload, thunkAPI) => {
+    const path = payload[1];
+    const object_data = payload[0];
+    try {
+      const { data } = await axios.post(
+        REACT_APP_API_DOUBLECHECK_URL + path,
+        object_data
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 // [회원가입]
 export const __createUsers = createAsyncThunk(
   "createUsers",
   async (newUser, thunkAPI) => {
-    console.log("hello", newUser);
     try {
       const { data } = await axios.post(REACT_APP_API_USERS_URL, newUser);
-      console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -114,7 +109,6 @@ export const __logoutUsers = createAsyncThunk(
       axios.defaults.headers.common["refresh-token"] = refresh;
 
       const response = await axios.post(REACT_APP_API_LOGOUT_URL);
-      console.log("response", response.data);
       removeCookie("access_token");
       removeCookie("refresh_token");
       return thunkAPI.fulfillWithValue(response.data);
