@@ -151,7 +151,6 @@ function EditReviewComponent() {
                   height="150"
                   width="230"
                 />
-                )
               </>
             )}
           </ElementBox>

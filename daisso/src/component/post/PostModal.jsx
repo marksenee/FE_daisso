@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { __getPostDetail, __likesPost } from "../../redux/modules/postSlice";
+import { __deleteBoard } from "../../redux/modules/board";
 // import { __likesPost } from "../../redux/modules/likesSlice";
 
 function PostModal() {
@@ -14,7 +15,9 @@ function PostModal() {
   const adata = data.data;
   const { id } = useParams();
   const star = "⭐️".repeat(apost?.star);
-  const product = apost?.productName.replace(/\[.*?\]/g, "").replace(/\-.*/, "");
+  const product = apost?.productName
+    .replace(/\[.*?\]/g, "")
+    .replace(/\-.*/, "");
 
   const onClickUrlHandler = () => {
     window.open(apost?.productUrl);
@@ -22,6 +25,17 @@ function PostModal() {
 
   const likeBtnHandler = () => {
     dispatch(__likesPost(id));
+  };
+
+  const deletePost = () => {
+    dispatch(__deleteBoard(id)).then((res) => {
+      if (res.payload.success) {
+        alert("삭제 완료!");
+        navigate("/");
+      } else {
+        alert("삭제 실패!");
+      }
+    });
   };
 
   useEffect(() => {
@@ -64,7 +78,7 @@ function PostModal() {
             <ModalBtn onClick={() => navigate(`/edit/review/${id}`)}>
               수정
             </ModalBtn>
-            <ModalBtn>삭제</ModalBtn>
+            <ModalBtn onClick={deletePost}>삭제</ModalBtn>
           </div>
           {/* TODO: 기본-흰 하트, 좋아요 클릭-빨간 하트 */}
           <LikeP onClick={likeBtnHandler}>

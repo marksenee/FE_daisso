@@ -79,6 +79,25 @@ export const __updateBoard = createAsyncThunk(
   }
 );
 
+export const __deleteBoard = createAsyncThunk(
+  "deleteBoard",
+  async (payload, thunkAPI) => {
+    try {
+      const access = getCookie("access_token");
+      const refresh = getCookie("refresh_token");
+
+      axios.defaults.headers.common["authorization"] = access;
+      axios.defaults.headers.common["refresh-token"] = refresh;
+      const { data } = await axios.delete(
+        REACT_APP_API_UPDATE_URL + `${payload}`
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 // createSlice
 export const board = createSlice({
   name: "board",
@@ -98,6 +117,9 @@ export const board = createSlice({
     },
     [__updateBoard.fulfilled]: (state, action) => {
       console.log("dd", action);
+      state.isLoding = true;
+    },
+    [__deleteBoard.fulfilled]: (state, action) => {
       state.isLoding = true;
     },
     // reject
