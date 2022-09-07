@@ -118,28 +118,7 @@ function EditReviewComponent() {
           <ElementBox height="300px" block="inline-block">
             <TextStyle>사진첨부</TextStyle>
             <ImageInput type="file" name="imageUrl" onChange={onChangeImage} />
-            {/* {!board.imageUrl ? (
-              <img
-                src={board.imageUrl}
-                style={{ margin: "10px 0px 0px 100px" }}
-                height="150"
-                width="230"
-              />
-            ) : (
-              <>
-                {" "}
-                {image && (
-                  <img
-                    className="image-box"
-                    src={imageUrl}
-                    style={{ margin: "10px 0px 0px 100px" }}
-                    height="150"
-                    width="230"
-                  />
-                )}
-              </>
-            )} */}
-            {!image && (
+            {image && image ? (
               <img
                 className="image-box"
                 src={imageUrl}
@@ -147,6 +126,17 @@ function EditReviewComponent() {
                 height="150"
                 width="230"
               />
+            ) : (
+              <>
+                <img
+                  className="image-box"
+                  src={imageUrl}
+                  style={{ margin: "10px 0px 0px 100px" }}
+                  height="150"
+                  width="230"
+                />
+                )
+              </>
             )}
           </ElementBox>
           <ElementBoxStyle direction="center" block="flex">
