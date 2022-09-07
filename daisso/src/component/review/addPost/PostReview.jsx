@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../layout/Layout";
-import ReviewHeader from "../header/Header";
-import useBoardInput from "../../../hooks/useBoardInput";
 import { FaStar } from "react-icons/fa";
 import {
   Container,
@@ -18,22 +16,27 @@ import {
 } from "./styles";
 import useInput from "../../../hooks/useInput";
 import useImageInput from "../../../hooks/useImageInput";
+import { __createBoard } from "../../../redux/modules/board";
+import { useDispatch } from "react-redux";
 
 function PostReview() {
   return (
     <>
       <Layout children={<PostReviewComponent />} />
-      {/* <ReviewHeader children={<EditReviewComponent />} /> */}
     </>
   );
 }
 
 function PostReviewComponent() {
+  const dispatch = useDispatch();
+
   const array = [0, 1, 2, 3, 4];
   const [star, setStar] = useState([false, false, false, false, false]);
+  const [starIndex, setStarIndex] = useState(0);
 
   const handleStarClick = (index) => {
     let starStatus = [...star];
+    setStarIndex(index + 1);
     for (let i = 0; i < starStatus.length; i++) {
       if (i <= index) {
         starStatus[i] = true;
@@ -53,17 +56,33 @@ function PostReviewComponent() {
 
   const onHandleClick = () => {
     const formData = new FormData();
-    formData.append("imageUrl", image);
-    formData.append("productUrl", productUrl);
-    formData.append("content", content);
-    formData.append("star", star);
+    formData.append("multipartFile", image);
+    const obj = {
+      productUrl: productUrl,
+      productName: "test",
+      star: starIndex,
+      content: content,
+    };
+    formData.append(
+      "requestDto",
+      new Blob([JSON.stringify(obj)], {
+        type: "application/json",
+      })
+    );
 
     // for (let value of formData.values()) {
     //   // 값 확인
     //   console.log("formdata", value);
     // }
+    dispatch(__createBoard(formData)).then((res) => {
+      if (res.payload.success) {
+        alert("게시글 등록 완료!");
+        window.history.back();
+      } else {
+        alert("게시글 등록 실패!");
+      }
+    });
   };
-  // console.log(onHandleClick());
 
   return (
     <Container>
@@ -113,7 +132,7 @@ function PostReviewComponent() {
             )}
           </ElementBox>
           <ElementBoxStyle direction="center" block="flex">
-            <ButtonStyle>작성하기</ButtonStyle>
+            <ButtonStyle onClick={() => onHandleClick()}>작성하기</ButtonStyle>
             <ButtonStyle>취소</ButtonStyle>
           </ElementBoxStyle>
         </ChildContainer>
