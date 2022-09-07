@@ -72,7 +72,7 @@ export const __updateBoard = createAsyncThunk(
           },
         }
       );
-      console.log("check", data);
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -97,6 +97,7 @@ export const board = createSlice({
       state.isLoding = true;
     },
     [__updateBoard.fulfilled]: (state, action) => {
+      console.log("dd", action);
       state.isLoding = true;
     },
     // reject

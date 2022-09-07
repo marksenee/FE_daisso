@@ -52,6 +52,10 @@ function EditReviewComponent() {
     board.imageUrl
   );
 
+  const goBack = () => {
+    window.history.back();
+  };
+
   useEffect(() => {
     dispatch(__getDetailBoard(postId)).then((res) => {
       const data = res.payload.data;
@@ -63,21 +67,33 @@ function EditReviewComponent() {
   }, [dispatch]);
 
   const onHandleClick = (id) => {
-    const formData = new FormData();
-    formData.append("multipartFile", image);
-    const obj = {
-      productUrl: productUrl,
-      productName: "test",
-      star: star,
-      content: content,
-    };
-    formData.append(
-      "requestDto",
-      new Blob([JSON.stringify(obj)], {
-        type: "application/json",
-      })
-    );
-    dispatch(__updateBoard({ id, formData }));
+    if (productUrl !== "" && star !== "" && content !== "") {
+      const formData = new FormData();
+      formData.append("multipartFile", image);
+      const obj = {
+        productUrl: productUrl,
+        productName: "test",
+        star: star,
+        content: content,
+      };
+      formData.append(
+        "requestDto",
+        new Blob([JSON.stringify(obj)], {
+          type: "application/json",
+        })
+      );
+      dispatch(__updateBoard({ id, formData })).then((res) => {
+        if (res.payload.success) {
+          alert("수정이 완료되었습니다!");
+          goBack();
+        } else {
+          alert("수정이 실패했습니다!");
+        }
+      });
+    } else {
+      alert("게시글을 모두 작성해주세요!");
+    }
+
     // for (let value of formData.values()) {
     //   // 값 확인
     //   console.log("formdata", value);
