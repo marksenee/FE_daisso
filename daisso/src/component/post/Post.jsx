@@ -4,6 +4,12 @@ import { PostBox, PostContent } from "./styles";
 
 function Post({ eachpost }) {
   const navigate = useNavigate();
+  const star = "⭐️".repeat(eachpost.star);
+  const productName = eachpost.productName;
+  // const productSplit = productName.split("]");
+  // const betterProductName = productName.split("]")[productName.split("]").length - 1];
+  const product = productName.replace(/\[.*?\]/g, "").replace(/\-.*/, "");
+
   return (
     <PostBox
       onClick={() => {
@@ -22,9 +28,9 @@ function Post({ eachpost }) {
             textAlign: "center",
           }}
         >
-          {eachpost.productName}
+          {product}
         </p>
-        <div>{eachpost.star}</div>
+        <div>{star}</div>
       </PostContent>
     </PostBox>
   );
