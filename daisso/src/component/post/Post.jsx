@@ -6,10 +6,10 @@ function Post({ eachpost }) {
   const navigate = useNavigate();
   const star = "⭐️".repeat(eachpost.star);
   const productName = eachpost.productName;
-  const productSplit = productName.split("]");
-  const betterProductName = productName.split("]")[productName.split("]").length - 1];
-  console.log(betterProductName);
-  // console.log(str.split("]")[str.split("]").length - 1]);
+  // const productSplit = productName.split("]");
+  // const betterProductName = productName.split("]")[productName.split("]").length - 1];
+  const product = productName.replace(/\[.*?\]/g, "").replace(/\-.*/, "");
+
   return (
     <PostBox
       onClick={() => {
@@ -28,7 +28,7 @@ function Post({ eachpost }) {
             textAlign: "center",
           }}
         >
-          {productSplit.indexOf("[딜") === -1 ? productName : betterProductName}
+          {product}
         </p>
         <div>{star}</div>
       </PostContent>

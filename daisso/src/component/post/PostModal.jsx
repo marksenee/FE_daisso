@@ -12,9 +12,9 @@ function PostModal() {
   const { data } = useSelector((state) => state.post);
   const apost = detail.data;
   const adata = data.data;
-  console.log("좋아요", adata);
   const { id } = useParams();
   const star = "⭐️".repeat(apost?.star);
+  const product = apost?.productName.replace(/\[.*?\]/g, "").replace(/\-.*/, "");
 
   const onClickUrlHandler = () => {
     window.open(apost?.productUrl);
@@ -41,7 +41,7 @@ function PostModal() {
                 whiteSpace: "nowrap",
               }}
             >
-              {apost?.productName}
+              {product}
             </div>{" "}
             <ModalLinkBtn onClick={onClickUrlHandler}>바로가기</ModalLinkBtn>
           </div>
