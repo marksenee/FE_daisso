@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
-import Layout from "../../layout/Layout";
-import ReviewHeader from "../header/Header";
 import useInput from "../../../hooks/useInput";
 import useImageInput from "../../../hooks/useImageInput";
 import Header from "../../header/Header";
@@ -41,36 +39,27 @@ function EditReviewComponent() {
   const postId = Number(param.id);
 
   const array = [0, 1, 2, 3, 4];
-  const [star, setStar] = useState([false, false, false, false, false]);
+  const [star, setStar] = useState(0);
 
-  const [starIndex, setStarIndex] = useState(0);
-
-  const handleStarClick = (index) => {
-    let starStatus = [...star];
-    setStarIndex(index + 1);
-    for (let i = 0; i < starStatus.length; i++) {
-      if (i <= index) {
-        starStatus[i] = true;
-      } else {
-        starStatus[i] = false;
-      }
-    }
-    setStar(starStatus);
+  const changeNewStar = (newStar) => {
+    setStar(newStar);
   };
 
-  // const [productUrl, setProductUrl, onChangeProductUrl] = useInput(
-  //   board.productUrl
-  // );
-
   /* useState */
-  const [productUrl, setProductUrl] = useState(board.productUrl);
-  const [content, setContent, onChangeContent] = useInput(board.content);
+  const [productUrl, setProductUrl, onChangeProductUrl] = useInput();
+  const [content, setContent, onChangeContent] = useInput();
   const [image, setImage, imageUrl, setImageUrl, onChangeImage] = useImageInput(
     board.imageUrl
   );
 
   useEffect(() => {
-    dispatch(__getDetailBoard(postId));
+    dispatch(__getDetailBoard(postId)).then((res) => {
+      const data = res.payload.data;
+      setProductUrl(data.productUrl);
+      setContent(data.content);
+      setImageUrl(data.imageUrl);
+      setStar(data.star);
+    });
   }, [dispatch]);
 
   const onHandleClick = (id) => {
@@ -79,7 +68,7 @@ function EditReviewComponent() {
     const obj = {
       productUrl: productUrl,
       productName: "test",
-      star: starIndex,
+      star: star,
       content: content,
     };
     formData.append(
@@ -88,7 +77,6 @@ function EditReviewComponent() {
         type: "application/json",
       })
     );
-
     dispatch(__updateBoard({ id, formData }));
     // for (let value of formData.values()) {
     //   // 값 확인
@@ -103,8 +91,8 @@ function EditReviewComponent() {
           <ElementBox>
             <TextStyle>제품링크</TextStyle>
             <FormField
-              defaultValue={board.productUrl}
-              onChange={(event) => setProductUrl(event.target.value)}
+              defaultValue={productUrl}
+              onChange={onChangeProductUrl}
             />
           </ElementBox>
           <ElementBox height="65px">
@@ -115,17 +103,16 @@ function EditReviewComponent() {
                   <FaStar
                     key={idx}
                     size="25"
-                    onClick={() => handleStarClick(i)}
-                    className={star[i] && "yellowStar"}
+                    color={star >= i + 1 ? "#fcc419" : "grey"}
+                    onClick={() => changeNewStar(i + 1)}
                   />
                 );
               })}
             </Stars>
           </ElementBox>
           <ReviewTextArea
-            placeholder={board.content}
             name="content"
-            value={content}
+            defaultValue={content}
             onChange={onChangeContent}
           />
           <ElementBox height="300px" block="inline-block">
@@ -152,7 +139,7 @@ function EditReviewComponent() {
                 )}
               </>
             )} */}
-            {image && (
+            {!image && (
               <img
                 className="image-box"
                 src={imageUrl}
