@@ -61,7 +61,9 @@ function PostModal() {
         <ModalText>{apost?.content}</ModalText>
         <ModalFooter>
           <div>
-            <ModalBtn>수정</ModalBtn>
+            <ModalBtn onClick={() => navigate(`/edit/review/${id}`)}>
+              수정
+            </ModalBtn>
             <ModalBtn>삭제</ModalBtn>
           </div>
           {/* TODO: 기본-흰 하트, 좋아요 클릭-빨간 하트 */}

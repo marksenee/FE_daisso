@@ -29,7 +29,12 @@ function Header() {
   return (
     <HeaderDiv>
       <HeaderLogo onClick={() => navigate("/")}>
-        <img src="../daisso.jpeg" alt="logo" width="75" height="75" />
+        <img
+          src={process.env.PUBLIC_URL + "/daisso.jpeg"}
+          alt="logo"
+          width="75"
+          height="75"
+        />
       </HeaderLogo>
       <HeaderRight>
         {!token ? (
