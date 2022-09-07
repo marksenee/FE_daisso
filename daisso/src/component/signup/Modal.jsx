@@ -35,15 +35,10 @@ function Modal({ modalHandler }) {
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
   const { users } = useSelector((state) => state.users);
-  console.log("users", users);
+  // console.log("users", users);
 
   //  [중복확인]
-  const testDoubleCheck = (
-    data,
-    setData,
-    setDataMessage,
-    setDataMessageDetail
-  ) => {
+  const testDoubleCheck = (data, setData, setDataMessage, setDataMessageDetail) => {
     dispatch(__doubleCheck([{ userId: data }, "checkId"])).then((res) => {
       if (res.payload) {
         setData(true);
@@ -129,12 +124,7 @@ function Modal({ modalHandler }) {
           />
           <DoubleCheckButton
             onClick={() =>
-              testDoubleCheck(
-                nickname,
-                setIsNickName,
-                setNickNameMessage,
-                "닉네임"
-              )
+              testDoubleCheck(nickname, setIsNickName, setNickNameMessage, "닉네임")
             }
           >
             중복확인
@@ -169,9 +159,7 @@ function Modal({ modalHandler }) {
         </SignupForm>
         <SignupButton
           onClick={() => onSubmitSignup(body)}
-          disabled={
-            !(isUserId && isNickName && isPassword && isPasswordConfirm)
-          }
+          disabled={!(isUserId && isNickName && isPassword && isPasswordConfirm)}
         >
           회원가입
         </SignupButton>

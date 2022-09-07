@@ -2,25 +2,30 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { __getPost } from "../../redux/modules/postSlice";
+import { __getPostDetail, __likesPost } from "../../redux/modules/postSlice";
+// import { __likesPost } from "../../redux/modules/likesSlice";
 
 function PostModal() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { post } = useSelector((state) => state.post);
+  const { detail } = useSelector((state) => state.post);
+  const { data } = useSelector((state) => state.post);
+  const apost = detail.data;
+  const adata = data.data;
   const { id } = useParams();
-  const review = post.find((eachpost) => eachpost.id === +id);
+  const star = "⭐️".repeat(apost?.star);
+  const product = apost?.productName.replace(/\[.*?\]/g, "").replace(/\-.*/, "");
 
   const onClickUrlHandler = () => {
-    window.open(review.productUrl);
+    window.open(apost?.productUrl);
   };
 
-  const goBack = () => {
-    window.history.back();
+  const likeBtnHandler = () => {
+    dispatch(__likesPost(id));
   };
 
   useEffect(() => {
-    dispatch(__getPost());
+    dispatch(__getPostDetail(id));
   }, [dispatch]);
 
   return (
@@ -28,18 +33,32 @@ function PostModal() {
       <ModalBox>
         <ModalHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <div>{review?.productName}</div>{" "}
+            <div
+              style={{
+                width: "385px",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {product}
+            </div>{" "}
             <ModalLinkBtn onClick={onClickUrlHandler}>바로가기</ModalLinkBtn>
           </div>
-          <div onClick={goBack}>𝐗</div>
+          <div
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            𝐗
+          </div>
         </ModalHeader>
         <ModalNickStar>
-          <p>{review?.nickname}</p>
-          <p>{review?.star}</p>
+          <p>{apost?.nickname}</p>
+          <p>{star}</p>
         </ModalNickStar>
-        {/* TODO: 첨부 기능 구현시 ImgUrl로 변경  */}
-        <ModalPhoto src={review?.productImg} />
-        <ModalText>{review?.content}</ModalText>
+        <ModalPhoto src={apost?.imageUrl} />
+        <ModalText>{apost?.content}</ModalText>
         <ModalFooter>
           <div>
             <ModalBtn onClick={() => navigate(`/edit/review/${id}`)}>
@@ -48,7 +67,13 @@ function PostModal() {
             <ModalBtn>삭제</ModalBtn>
           </div>
           {/* TODO: 기본-흰 하트, 좋아요 클릭-빨간 하트 */}
-          <p style={{ fontSize: "1.5em", marginTop: "0px" }}>🤍❤️</p>
+          <LikeP onClick={likeBtnHandler}>
+            {/* {adata === undefined && <span>🤍</span>} */}
+            {!adata ? <span>❤️</span> : <span>🤍</span>}
+            {/* {adata === "like post cancel" && <span>🤍</span>} */}
+            {/* {apost?.likes === 0 && <span>🤍</span>}
+            {apost?.likes === 1 && <span>❤️</span>} */}
+          </LikeP>
         </ModalFooter>
       </ModalBox>
     </ModalBack>
@@ -90,7 +115,7 @@ const ModalHeader = styled.div`
   margin: 0px 0px 5px 0px;
   padding-bottom: 13px;
   border-bottom: 1.5px solid #da3731;
-  font-size: 1.4em;
+  font-size: 1.25em;
   font-weight: bold;
   align-items: center;
 `;
@@ -148,4 +173,9 @@ const ModalBtn = styled.button`
   &:hover {
     color: #da3731;
   }
+`;
+
+const LikeP = styled.p`
+  font-size: 1.5em;
+  margin-top: 0px;
 `;
