@@ -60,6 +60,7 @@ export const postSlice = createSlice({
     [__getPost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.post = action.payload;
+      // console.log(state.post);
     },
     [__getPost.rejected]: (state, action) => {
       state.isLoading = false;
@@ -67,9 +68,11 @@ export const postSlice = createSlice({
     },
     [__getPostDetail.fulfilled]: (state, action) => {
       state.detail = action.payload;
+      // console.log(state.detail);
     },
     [__likesPost.fulfilled]: (state, action) => {
       state.data = action.payload;
+      // console.log(state.data.data);
     },
   },
 });

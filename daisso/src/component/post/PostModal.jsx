@@ -9,10 +9,14 @@ function PostModal() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { detail } = useSelector((state) => state.post);
+  const { data } = useSelector((state) => state.post);
   const apost = detail.data;
+  const adata = data.data;
+  console.log(adata);
   const { id } = useParams();
   const star = "⭐️".repeat(apost?.star);
-  console.log(apost?.likes);
+
+  // console.log(apost?.likes);
 
   const onClickUrlHandler = () => {
     window.open(apost?.productUrl);
@@ -20,7 +24,6 @@ function PostModal() {
 
   const likeBtnHandler = () => {
     dispatch(__likesPost(id));
-    dispatch(__getPostDetail(id));
   };
 
   useEffect(() => {
@@ -65,8 +68,11 @@ function PostModal() {
           </div>
           {/* TODO: 기본-흰 하트, 좋아요 클릭-빨간 하트 */}
           <LikeP onClick={likeBtnHandler}>
-            {apost?.likes === 0 && <span>🤍</span>}
-            {apost?.likes === 1 && <span>❤️</span>}
+            {adata === undefined && <span>🤍</span>}
+            {adata === "like post success" && <span>❤️</span>}
+            {adata === "like post cancel" && <span>🤍</span>}
+            {/* {apost?.likes === 0 && <span>🤍</span>}
+            {apost?.likes === 1 && <span>❤️</span>} */}
           </LikeP>
         </ModalFooter>
       </ModalBox>
@@ -109,7 +115,7 @@ const ModalHeader = styled.div`
   margin: 0px 0px 5px 0px;
   padding-bottom: 13px;
   border-bottom: 1.5px solid #da3731;
-  font-size: 1.4em;
+  font-size: 1.25em;
   font-weight: bold;
   align-items: center;
 `;
