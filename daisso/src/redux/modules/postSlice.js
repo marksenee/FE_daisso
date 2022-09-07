@@ -1,13 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getCookie } from "../../utils/Cookie";
 
 const REACT_APP_API_POST_URL = `http://15.164.224.94/api/post`;
+const REACT_APP_API_LIKES_URL = `http://15.164.224.94/api/auth/like/post`;
 
 const initialState = {
   post: [],
   detail: [],
+  data: "",
   isLoading: false,
-  // success: true,
   error: null,
 };
 
@@ -32,6 +34,21 @@ export const __getPostDetail = createAsyncThunk(
   }
 );
 
+export const __likesPost = createAsyncThunk("likesPost", async (payload, thunkAPI) => {
+  try {
+    const access = getCookie("access_token");
+    const refresh = getCookie("refresh_token");
+
+    axios.defaults.headers.common["authorization"] = access;
+    axios.defaults.headers.common["refresh-token"] = refresh;
+
+    const data = await axios.post(REACT_APP_API_LIKES_URL + `/${payload}`);
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 export const postSlice = createSlice({
   name: "post",
   initialState,
@@ -51,8 +68,11 @@ export const postSlice = createSlice({
     [__getPostDetail.fulfilled]: (state, action) => {
       state.detail = action.payload;
     },
+    [__likesPost.fulfilled]: (state, action) => {
+      state.data = action.payload;
+    },
   },
 });
 
-export const {} = postSlice.actions;
+export const { likespost } = postSlice.actions;
 export default postSlice.reducer;

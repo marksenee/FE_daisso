@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { __getPostDetail } from "../../redux/modules/postSlice";
+import { __getPostDetail, __likesPost } from "../../redux/modules/postSlice";
+// import { __likesPost } from "../../redux/modules/likesSlice";
 
 function PostModal() {
   const navigate = useNavigate();
@@ -11,9 +12,15 @@ function PostModal() {
   const apost = detail.data;
   const { id } = useParams();
   const star = "⭐️".repeat(apost?.star);
+  console.log(apost?.likes);
 
   const onClickUrlHandler = () => {
     window.open(apost?.productUrl);
+  };
+
+  const likeBtnHandler = () => {
+    dispatch(__likesPost(id));
+    dispatch(__getPostDetail(id));
   };
 
   useEffect(() => {
@@ -25,7 +32,16 @@ function PostModal() {
       <ModalBox>
         <ModalHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <div>{apost?.productName}</div>{" "}
+            <div
+              style={{
+                width: "385px",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {apost?.productName}
+            </div>{" "}
             <ModalLinkBtn onClick={onClickUrlHandler}>바로가기</ModalLinkBtn>
           </div>
           <div
@@ -40,8 +56,7 @@ function PostModal() {
           <p>{apost?.nickname}</p>
           <p>{star}</p>
         </ModalNickStar>
-        {/* TODO: 첨부 기능 구현시 ImgUrl로 변경  */}
-        <ModalPhoto src={apost?.productImg} />
+        <ModalPhoto src={apost?.imageUrl} />
         <ModalText>{apost?.content}</ModalText>
         <ModalFooter>
           <div>
@@ -49,7 +64,10 @@ function PostModal() {
             <ModalBtn>삭제</ModalBtn>
           </div>
           {/* TODO: 기본-흰 하트, 좋아요 클릭-빨간 하트 */}
-          <p style={{ fontSize: "1.5em", marginTop: "0px" }}>🤍❤️</p>
+          <LikeP onClick={likeBtnHandler}>
+            {apost?.likes === 0 && <span>🤍</span>}
+            {apost?.likes === 1 && <span>❤️</span>}
+          </LikeP>
         </ModalFooter>
       </ModalBox>
     </ModalBack>
@@ -149,4 +167,9 @@ const ModalBtn = styled.button`
   &:hover {
     color: #da3731;
   }
+`;
+
+const LikeP = styled.p`
+  font-size: 1.5em;
+  margin-top: 0px;
 `;

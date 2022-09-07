@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import post from "./modules/postSlice";
 import users from "./modules/users";
+import likes from "./modules/likesSlice";
 
 const store = configureStore({
-  reducer: { post: post, users },
+  reducer: { post, users, likes },
   devTools: process.env.NODE_ENV !== "production",
 });
 

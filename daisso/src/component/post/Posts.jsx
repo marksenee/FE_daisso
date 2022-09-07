@@ -10,7 +10,6 @@ function Posts() {
   const dispatch = useDispatch();
   const { isLoading, error, post } = useSelector((state) => state.post);
   const apost = post.data;
-  console.log(apost);
 
   useEffect(() => {
     dispatch(__getPost());
