@@ -12,11 +12,9 @@ function PostModal() {
   const { data } = useSelector((state) => state.post);
   const apost = detail.data;
   const adata = data.data;
-  console.log(adata);
+  console.log("좋아요", adata);
   const { id } = useParams();
   const star = "⭐️".repeat(apost?.star);
-
-  // console.log(apost?.likes);
 
   const onClickUrlHandler = () => {
     window.open(apost?.productUrl);
@@ -68,9 +66,9 @@ function PostModal() {
           </div>
           {/* TODO: 기본-흰 하트, 좋아요 클릭-빨간 하트 */}
           <LikeP onClick={likeBtnHandler}>
-            {adata === undefined && <span>🤍</span>}
-            {adata === "like post success" && <span>❤️</span>}
-            {adata === "like post cancel" && <span>🤍</span>}
+            {/* {adata === undefined && <span>🤍</span>} */}
+            {!adata ? <span>❤️</span> : <span>🤍</span>}
+            {/* {adata === "like post cancel" && <span>🤍</span>} */}
             {/* {apost?.likes === 0 && <span>🤍</span>}
             {apost?.likes === 1 && <span>❤️</span>} */}
           </LikeP>

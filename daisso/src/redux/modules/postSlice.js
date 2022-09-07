@@ -8,7 +8,7 @@ const REACT_APP_API_LIKES_URL = `http://15.164.224.94/api/auth/like/post`;
 const initialState = {
   post: [],
   detail: [],
-  data: "",
+  data: false,
   isLoading: false,
   error: null,
 };
@@ -68,11 +68,11 @@ export const postSlice = createSlice({
     },
     [__getPostDetail.fulfilled]: (state, action) => {
       state.detail = action.payload;
-      // console.log(state.detail);
+      console.log(state.detail);
     },
     [__likesPost.fulfilled]: (state, action) => {
       state.data = action.payload;
-      // console.log(state.data.data);
+      console.log(state.data.data);
     },
   },
 });
