@@ -84,10 +84,15 @@ function PostReviewComponent() {
     });
   };
 
+  const goBack = () => {
+    window.history.back();
+  };
+
   return (
     <Container>
       <ParentContainer>
         <ChildContainer>
+          <h3 style={{ margin: "0px 0px 10px 20px" }}>게시글 등록</h3>
           <ElementBox>
             <TextStyle>제품링크</TextStyle>
             <FormField
@@ -133,7 +138,7 @@ function PostReviewComponent() {
           </ElementBox>
           <ElementBoxStyle direction="center" block="flex">
             <ButtonStyle onClick={() => onHandleClick()}>작성하기</ButtonStyle>
-            <ButtonStyle>취소</ButtonStyle>
+            <ButtonStyle onClick={() => goBack()}>취소</ButtonStyle>
           </ElementBoxStyle>
         </ChildContainer>
       </ParentContainer>
