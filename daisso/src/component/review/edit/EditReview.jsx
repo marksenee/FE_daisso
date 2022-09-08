@@ -158,7 +158,7 @@ function EditReviewComponent() {
             <ButtonStyle onClick={() => onHandleClick(postId)}>
               수정하기
             </ButtonStyle>
-            <ButtonStyle>취소</ButtonStyle>
+            <ButtonStyle onClick={goBack}>취소</ButtonStyle>
           </ElementBoxStyle>
         </ChildContainer>
       </ParentContainer>
