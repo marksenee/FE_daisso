@@ -9,7 +9,7 @@ export const setCookie = (name, value) => {
   return cookies.set(name, value, {
     path: "/", // 모든 페이지에서 엑세스 가능
     secure: true,
-    expires,
+    // expires,
   });
 };
 
