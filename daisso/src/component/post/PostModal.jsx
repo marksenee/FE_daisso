@@ -1,30 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { __getPostDetail, __likesPost } from "../../redux/modules/postSlice";
 import { __deleteBoard } from "../../redux/modules/board";
-// import { __likesPost } from "../../redux/modules/likesSlice";
 
 function PostModal() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { detail } = useSelector((state) => state.post);
-  const { data } = useSelector((state) => state.post);
   const apost = detail.data;
-  const adata = data.data;
   const { id } = useParams();
   const star = "⭐️".repeat(apost?.star);
-  const product = apost?.productName
-    .replace(/\[.*?\]/g, "")
-    .replace(/\-.*/, "");
+  const product = apost?.productName.replace(/\[.*?\]/g, "").replace(/\-.*/, "");
+  const like = apost?.checkLike;
+  console.log("checkLike:", like);
+
+  const [heart, setHeart] = useState(like);
 
   const onClickUrlHandler = () => {
     window.open(apost?.productUrl);
   };
 
   const likeBtnHandler = () => {
-    dispatch(__likesPost(id));
+    dispatch(__likesPost({ id: id, like: like })).then((res) => {
+      setHeart(res.payload.data);
+    });
   };
 
   const deletePost = () => {
@@ -39,7 +40,9 @@ function PostModal() {
   };
 
   useEffect(() => {
-    dispatch(__getPostDetail(id));
+    dispatch(__getPostDetail(id)).then((res) => {
+      setHeart(res.payload.data.checkLike);
+    });
   }, [dispatch]);
 
   return (
@@ -75,18 +78,12 @@ function PostModal() {
         <ModalText>{apost?.content}</ModalText>
         <ModalFooter>
           <div>
-            <ModalBtn onClick={() => navigate(`/edit/review/${id}`)}>
-              수정
-            </ModalBtn>
+            <ModalBtn onClick={() => navigate(`/edit/review/${id}`)}>수정</ModalBtn>
             <ModalBtn onClick={deletePost}>삭제</ModalBtn>
           </div>
           {/* TODO: 기본-흰 하트, 좋아요 클릭-빨간 하트 */}
           <LikeP onClick={likeBtnHandler}>
-            {/* {adata === undefined && <span>🤍</span>} */}
-            {!adata ? <span>❤️</span> : <span>🤍</span>}
-            {/* {adata === "like post cancel" && <span>🤍</span>} */}
-            {/* {apost?.likes === 0 && <span>🤍</span>}
-            {apost?.likes === 1 && <span>❤️</span>} */}
+            {heart ? <span>❤️</span> : <span>🤍</span>}
           </LikeP>
         </ModalFooter>
       </ModalBox>

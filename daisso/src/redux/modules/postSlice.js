@@ -41,8 +41,9 @@ export const __likesPost = createAsyncThunk("likesPost", async (payload, thunkAP
 
     axios.defaults.headers.common["authorization"] = access;
     axios.defaults.headers.common["refresh-token"] = refresh;
+    console.log("??:", payload);
 
-    const data = await axios.post(REACT_APP_API_LIKES_URL + `/${payload}`);
+    const data = await axios.post(REACT_APP_API_LIKES_URL + `/${payload.id}`);
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -60,7 +61,6 @@ export const postSlice = createSlice({
     [__getPost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.post = action.payload;
-      // console.log(state.post);
     },
     [__getPost.rejected]: (state, action) => {
       state.isLoading = false;
@@ -68,11 +68,10 @@ export const postSlice = createSlice({
     },
     [__getPostDetail.fulfilled]: (state, action) => {
       state.detail = action.payload;
-      console.log(state.detail);
     },
     [__likesPost.fulfilled]: (state, action) => {
-      state.data = action.payload;
-      console.log(state.data.data);
+      console.log("성공true 실패false:", action.payload);
+      // return action.payload.like;
     },
   },
 });
