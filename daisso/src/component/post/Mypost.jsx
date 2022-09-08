@@ -15,7 +15,7 @@ function Mypost({ mypost }) {
       }}
     >
       <PostContent>
-        <img src={mypost?.productImg} s width="200" height="200" />
+        <img src={mypost?.productImg} width="200" height="200" />
         {/* DESC: productName이 199px을 넘어갈 경우 ... 으로 표시하고 가운데 정렬 */}
         <p
           style={{

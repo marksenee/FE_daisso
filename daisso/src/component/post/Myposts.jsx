@@ -28,8 +28,6 @@ function Myposts() {
 
   const mypostList = mypost?.data.postList;
 
-  console.log(mypostList);
-
   return (
     <PostDiv>
       {mypostList?.map((mypost) => (
