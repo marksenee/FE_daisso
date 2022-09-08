@@ -18,6 +18,7 @@ import useInput from "../../../hooks/useInput";
 import useImageInput from "../../../hooks/useImageInput";
 import { __createBoard } from "../../../redux/modules/board";
 import { useDispatch } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function PostReview() {
   return (
@@ -29,6 +30,7 @@ function PostReview() {
 
 function PostReviewComponent() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const array = [0, 1, 2, 3, 4];
   const [star, setStar] = useState([false, false, false, false, false]);
@@ -77,7 +79,7 @@ function PostReviewComponent() {
     dispatch(__createBoard(formData)).then((res) => {
       if (res.payload.success) {
         alert("게시글 등록 완료!");
-        window.history.back();
+        navigate("/");
       } else {
         alert("게시글 등록 실패!");
       }

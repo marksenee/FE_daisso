@@ -2,6 +2,12 @@ import React from "react";
 import { FooterDiv, FooterLeft, FooterRight } from "./styles";
 
 function Footer() {
+  const github =
+    "https://github.com/orgs/innovation-W6-miniproject/repositories";
+  const onClickUrlHandler = () => {
+    window.open(github);
+  };
+
   return (
     <FooterDiv>
       <FooterLeft>
@@ -26,6 +32,7 @@ function Footer() {
         />
         <img
           src={process.env.PUBLIC_URL + "/githublogo.png"}
+          onClick={onClickUrlHandler}
           alt="githublogo"
           width="117"
           height="27"
