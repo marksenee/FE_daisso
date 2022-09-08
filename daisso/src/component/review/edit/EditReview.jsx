@@ -104,6 +104,7 @@ function EditReviewComponent() {
     <Container>
       <ParentContainer>
         <ChildContainer>
+          <h3 style={{ margin: "0px 0px 10px 20px" }}>게시글 수정</h3>
           <ElementBox>
             <TextStyle>제품링크</TextStyle>
             <FormField
